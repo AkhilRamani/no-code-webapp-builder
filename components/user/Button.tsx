@@ -1,11 +1,14 @@
 import React from "react";
 import { Button as ShadcnButton } from "@/components/ui/button"
+import { useNode } from "@craftjs/core";
+import { withNode } from "./connector";
 
 type ButtonProps = {
     children: React.ReactNode;
 }
 
-export const Button = ({children}: ButtonProps) => {
+const Button1 = ({children}: ButtonProps) => {
+  const { connectors: {connect, drag} } = useNode();
   // Map Material UI props to Shadcn UI props
 //   const sizeMapping = {
 //     small: "sm",
@@ -27,8 +30,17 @@ export const Button = ({children}: ButtonProps) => {
 //   const shadcnColor = colorMapping[color] || "blue";
 
   return (
-    <ShadcnButton>
+    <ShadcnButton ref={ref=> connect(drag(ref))}>
       {children}
     </ShadcnButton>
   )
 }
+
+export const Button = withNode(Button1, {draggable: true})
+
+Button1.craft = {
+  ...Button.craft,
+  // related: {
+  //   toolbar: SettingsControl,
+  // },
+};

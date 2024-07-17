@@ -7,7 +7,7 @@ import { Slider } from "@/components/ui/slider"
 
 export const SettingsPanel = () => {
   return  (    
-    <Card className="bg-gray-100">
+    <Card className="bg-gray-100 min-w-48">
       <CardHeader>
         <CardTitle className="text-lg font-medium">Selected</CardTitle>
         <Badge className="bg-blue-500 text-white" variant="default">Selected</Badge>

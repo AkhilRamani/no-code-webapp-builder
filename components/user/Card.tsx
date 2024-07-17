@@ -8,7 +8,8 @@ import {
     CardHeader,
     CardTitle,
   } from "@/components/ui/card"
-  import {Button} from "@/components/ui/button"
+import {Button} from "@/components/ui/button"
+import {useNode, Element} from "@craftjs/core";
 
 export const Card = () => {
     return (
@@ -28,3 +29,9 @@ export const Card = () => {
 
     )
 }
+
+Card.craft = {
+    rules: {
+      canDrag: (node) => node.data.props.text != "Drag"
+    }
+  }
