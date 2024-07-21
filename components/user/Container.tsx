@@ -5,9 +5,9 @@ import { DivideCircle } from "lucide-react";
 import { Separator } from "../ui/separator";
 
 type ClassNames = {
-  direction: 'flex-col' | 'flex-row',
-  display: 'block' | 'flex'
-}
+  direction: "flex-col" | "flex-row";
+  display: "block" | "flex";
+};
 
 type ContainerProps = {
   background?: string;
@@ -17,12 +17,14 @@ type ContainerProps = {
 };
 
 export const UserContainer = ({ background, children, classNames }: ContainerProps) => {
-  const { connectors: { connect, drag } } = useNode();
-  console.log({ classNames })
+  const {
+    connectors: { connect, drag },
+  } = useNode();
+
   return (
     <div
-      ref={ref => connect(drag(ref))}
-      className={`p-4 w-full ${classNames && Object.values(classNames).reduce((acc, value) => acc += ` ${value}`, '')}`}
+      ref={(ref) => connect(drag(ref))}
+      className={`p-4 w-full ${classNames && Object.values(classNames).reduce((acc, value) => (acc += ` ${value}`), "")}`}
       // className={`p-4 w-full ${classNames?.direction}`}
       // className={`p-4 w-full`}
       style={{ background }}
@@ -33,16 +35,19 @@ export const UserContainer = ({ background, children, classNames }: ContainerPro
 };
 
 interface SettingsProps {
-  classNames?: ClassNames
+  classNames?: ClassNames;
 }
 
 const ContainerSettings = () => {
-  const { actions: { setProp }, classNames } = useNode<SettingsProps>((node) => ({
-    classNames: node.data.props.classNames || ''
+  const {
+    actions: { setProp },
+    classNames,
+  } = useNode<SettingsProps>((node) => ({
+    classNames: node.data.props.classNames || "",
   }));
 
-  const onFDirectionTabChange = (value: string) => setProp((props: SettingsProps) => props.classNames = { ...classNames, direction: value })
-  const onTypeChange = (value: string) => setProp((props: SettingsProps) => props.classNames = { ...classNames, display: value })
+  const onFDirectionTabChange = (value: string) => setProp((props: SettingsProps) => (props.classNames = { ...classNames, direction: value }));
+  const onTypeChange = (value: string) => setProp((props: SettingsProps) => (props.classNames = { ...classNames, display: value }));
 
   return (
     <div>
@@ -50,15 +55,23 @@ const ContainerSettings = () => {
         <Label>Type</Label>
         <Tabs className="mt-2 mb-4 bg-slate-100 rounded-lg" defaultValue={classNames?.display} onValueChange={onTypeChange}>
           <TabsList className="w-full">
-            <TabsTrigger className="flex-1" value="block">Default</TabsTrigger>
-            <TabsTrigger className="flex-1" value="flex">Stack</TabsTrigger>
+            <TabsTrigger className="flex-1" value="block">
+              Default
+            </TabsTrigger>
+            <TabsTrigger className="flex-1" value="flex">
+              Stack
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="block"></TabsContent>
           <TabsContent value="flex" className="px-2 pb-2">
             <Tabs defaultValue={classNames?.direction} onValueChange={onFDirectionTabChange}>
-              <TabsList className="w-full" >
-                <TabsTrigger className="flex-1" value="flex-col">Verticle</TabsTrigger>
-                <TabsTrigger className="flex-1" value="flex-row">Horizontal</TabsTrigger>
+              <TabsList className="w-full">
+                <TabsTrigger className="flex-1" value="flex-col">
+                  Verticle
+                </TabsTrigger>
+                <TabsTrigger className="flex-1" value="flex-row">
+                  Horizontal
+                </TabsTrigger>
               </TabsList>
             </Tabs>
           </TabsContent>
@@ -66,16 +79,16 @@ const ContainerSettings = () => {
       </div>
       <Separator />
     </div>
-  )
-}
+  );
+};
 
 UserContainer.craft = {
   props: {
     classNames: {
-      direction: 'flex-col'
-    }
+      direction: "flex-col",
+    },
   },
   related: {
-    settings: ContainerSettings
-  }
-}
+    settings: ContainerSettings,
+  },
+};
