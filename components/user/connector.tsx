@@ -67,7 +67,8 @@ export const withNode = <T extends {}>(Component: React.ComponentType<T>, { drag
   const importPathMapKey = Component.displayName?.toLowerCase();
   console.log("importPathMapKey ", importPathMapKey, importPathMapKey && importPathMap[importPathMapKey]);
 
-  WithNode.craft = {
+  // Manually set the craft property
+  (WithNode as any).craft = {
     displayName: Component.displayName,
     custom: {
       importPath: importPathMapKey ? importPathMap[importPathMapKey] || "" : "",
