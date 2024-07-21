@@ -52,7 +52,7 @@ export const withNode = <T extends {}>(Component: React.ComponentType<T>, { drag
     return (
       <Component ref={applyRef} {...props} className={isActive ? `${props.className} component-selected` : props.className}>
         {typeof props.children === "string" && props.children.trim() === "" ? (
-          <>Empty text</>
+          <div>Empty text</div>
         ) : (
           props.children || <div className="text-center italic p-4 bg-yellow-100 outline-dashed outline-amber-400">Empty container</div>
         )}
