@@ -5,7 +5,7 @@ import {
   CardFooter as ShadcnCardFooter,
   CardHeader as ShadcnCardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import { useNode, Element } from "@craftjs/core";
 import { withNode } from "./connector";
 import { UserButton } from "./Button";
@@ -40,13 +40,13 @@ import { UserButton } from "./Button";
 //   }
 // }
 
-const nodeConfig = { draggable: true, droppable: true }
+const nodeConfig = { draggable: true, droppable: true };
 
-export const UserCardTitle = withNode(CardTitle, nodeConfig)
-export const UserCardDescription = withNode(CardDescription, nodeConfig)
+export const UserCardTitle = withNode(CardTitle, nodeConfig);
+export const UserCardDescription = withNode(CardDescription, nodeConfig);
 export const UserCardContainer = withNode(ShadcnCard, nodeConfig);
-export const UserCardHeader = withNode(ShadcnCardHeader, { droppable: true })
-export const UserCardFooter = withNode(ShadcnCardFooter, { droppable: true })
+export const UserCardHeader = withNode(ShadcnCardHeader, { droppable: true });
+export const UserCardFooter = withNode(ShadcnCardFooter, { droppable: true });
 
 export const UserCard = () => {
   return (
@@ -62,7 +62,6 @@ export const UserCard = () => {
       <Element id="card-footer" is={UserCardFooter} canvas>
         <UserButton>Done</UserButton>
       </Element>
-    </UserCardContainer >
-
-  )
-}
+    </UserCardContainer>
+  );
+};
