@@ -10,7 +10,7 @@ export const Toolbox: React.FC = () => {
   const { connectors, query } = useEditor();
 
   return (
-    <div className="px-2 py-2 border-r min-w-48">
+    <div className="px-2 py-2 border-r min-w-48 bg-white">
       <div className="flex flex-col items-center justify-center space-y-2">
         <h3>Drag to add</h3>
         <div className="flex flex-col space-y-2">

@@ -2,7 +2,8 @@ import { Bell, CommandIcon, Home, Package, ShoppingCart, Users } from "lucide-re
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
-import { useNode } from "@craftjs/core";
+import { useNode, Element } from "@craftjs/core";
+import { UserContainer } from "./Container";
 
 export const UserSidebar = () => {
   const {
@@ -10,8 +11,8 @@ export const UserSidebar = () => {
   } = useNode();
 
   return (
-    <div ref={(ref) => connect(drag(ref))} className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <div className="hidden border-r border-l bg-muted/40 md:block">
+    <div ref={(ref) => connect(drag(ref))} className="grid h-full w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+      <div className="hidden border-r bg-muted/40 md:block">
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Link href="#" className="flex items-center gap-2 font-semibold" prefetch={false}>
@@ -46,6 +47,9 @@ export const UserSidebar = () => {
           </div>
         </div>
       </div>
-    </div>
+      <Element id='sidebar-page' is={UserContainer} canvas>
+        {/* <Element id='siedbar-page-name' */}
+      </Element>
+    </div >
   );
 };
