@@ -5,6 +5,7 @@ import { UserText } from "./user/Text";
 import { UserContainer } from "./user/Container";
 import { UserCard } from "./user/Card";
 import { UserSidebar } from "./user/Sidebar";
+import { UserHeader } from "./user/Header";
 
 export const Toolbox: React.FC = () => {
   const { connectors, query } = useEditor();
@@ -19,6 +20,7 @@ export const Toolbox: React.FC = () => {
           <Button ref={(ref) => connectors.create(ref, <Element is={UserContainer} canvas />)}>Container</Button>
           <Button ref={(ref) => connectors.create(ref, <UserCard />)}>Card</Button>
           <Button ref={(ref) => connectors.create(ref, <UserSidebar />)}>Sidebar</Button>
+          <Button ref={(ref) => connectors.create(ref, <UserHeader />)}>Header</Button>
         </div>
       </div>
     </div>

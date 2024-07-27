@@ -17,6 +17,7 @@ export const Topbar: React.FC = () => {
   const onCopyExportClick = () => {
     const json = query.serialize();
     copy(lz.encodeBase64(lz.compress(json)));
+
     toast("State copied to clipboard");
   };
 
@@ -39,13 +40,13 @@ export const Topbar: React.FC = () => {
 
         <div className="flex gap-4">
           <Button variant="secondary" size="sm" onClick={onCopyExportClick}>
-            Serialize JSON to console
+            Copy page
           </Button>
 
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="default" size="sm">
-                Open
+                Load page
               </Button>
             </SheetTrigger>
             <SheetContent>

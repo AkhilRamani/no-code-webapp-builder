@@ -5,6 +5,7 @@ export const UserButton = withNode(ShadcnButton, { draggable: true, droppable: t
 
 UserButton.craft = {
   ...UserButton.craft,
+  displayName: 'button',
   // related: {
   //   toolbar: SettingsControl,
   // },

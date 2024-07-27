@@ -50,7 +50,7 @@ export const UserCardFooter = withNode(ShadcnCardFooter, { droppable: true });
 
 export const UserCard = () => {
   return (
-    <UserCardContainer className="w-[350px]">
+    <UserCardContainer className="w-[350px] m-4">
       <Element id="card-header" is={UserCardHeader as typeof UserCardHeader & string} canvas>
         <UserCardTitle>Create project</UserCardTitle>
         <UserCardDescription>Deploy your new project in one-click.</UserCardDescription>

@@ -4,6 +4,8 @@ import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 import { useNode, Element } from "@craftjs/core";
 import { UserContainer } from "./Container";
+import { UserText } from "./Text";
+import { UserHeader } from "./Header";
 
 export const UserSidebar = () => {
   const {
@@ -11,7 +13,7 @@ export const UserSidebar = () => {
   } = useNode();
 
   return (
-    <div ref={(ref) => connect(drag(ref))} className="grid h-full w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+    <div ref={(ref) => connect(drag(ref))} className="grid h-full w-full cols-2 lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
@@ -47,8 +49,15 @@ export const UserSidebar = () => {
           </div>
         </div>
       </div>
-      <Element id='sidebar-page' is={UserContainer} canvas>
+      <Element id='sidebar-page' is={UserContainer} classNames={{ all: 'flex flex-col overflow-auto' }} canvas>
         {/* <Element id='siedbar-page-name' */}
+        {/* <Element is={UserContainer} classNames={{ all: 'h-[60px] border-b bg-muted/40' }} canvas>
+          <UserText text="Title text" fontSize="20px" />
+        </Element> */}
+        <UserHeader />
+        <Element id='page contents' is={UserContainer} classNames={{ padding: '!p-0 h-full overflow-auto' }} canvas>
+
+        </Element>
       </Element>
     </div >
   );

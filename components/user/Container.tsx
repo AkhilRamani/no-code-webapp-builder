@@ -3,10 +3,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Label } from "../ui/label";
 import { DivideCircle } from "lucide-react";
 import { Separator } from "../ui/separator";
+import clsx from "clsx";
 
 type ClassNames = {
-  direction: "flex-col" | "flex-row";
-  display: "block" | "flex";
+  direction?: "flex-col" | "flex-row";
+  display?: "block" | "flex";
+  padding?: string;
+  all?: string;
 };
 
 type ContainerProps = {
@@ -24,7 +27,7 @@ export const UserContainer = ({ background, children, classNames }: ContainerPro
   return (
     <div
       ref={(ref) => connect(drag(ref))}
-      className={`p-4 w-full ${classNames && Object.values(classNames).reduce((acc, value) => (acc += ` ${value}`), "")}`}
+      className={clsx(!children && 'p-4', 'w-full', classNames && Object.values(classNames).reduce((acc, value) => (acc += ` ${value}`), ""))}
       // className={`p-4 w-full ${classNames?.direction}`}
       // className={`p-4 w-full`}
       style={{ background }}
