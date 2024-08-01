@@ -58,7 +58,7 @@ export const SidebarSettings = () => {
 
                 </TabsContent>
                 <TabsContent value="setting">
-                    <Label>Tabs</Label>
+                    <Label>Menus</Label>
                     <div className="grid gap-2 mt-3 ml-4 rounded-lg ">
                         {localMenus.map(({ id, name, icon }) => <SidebarMenuItem key={`${id}-sbsm`} name={name} icon={icon} />)}
 

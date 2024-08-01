@@ -6,12 +6,15 @@ import { UserContainer } from "./user/Container";
 import { UserCard } from "./user/Card";
 import { UserSidebar } from "./user/Sidebar/Sidebar";
 import { UserHeader } from "./user/Header";
+import clsx from "clsx";
 
 export const Toolbox: React.FC = () => {
-  const { connectors, query } = useEditor();
+  const { connectors, query, enabled } = useEditor(state => ({
+    enabled: state.options.enabled
+  }));
 
   return (
-    <div className="px-2 py-2 border-r min-w-48 bg-white">
+    <div className={clsx("px-2 py-2 border-r w-52 bg-white", 'duration-300 ease-out', enabled ? 'ml-0' : '-ml-52')}>
       <div className="flex flex-col items-center justify-center space-y-2">
         <h3>Drag to add</h3>
         <div className="flex flex-col space-y-2">

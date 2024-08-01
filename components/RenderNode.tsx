@@ -2,7 +2,7 @@ import { useNode, useEditor } from '@craftjs/core';
 import { ROOT_NODE } from '@craftjs/utils';
 import React, { useEffect, useRef, useCallback } from 'react';
 import ReactDOM from 'react-dom';
-import { ArrowUp, MoveRight, Trash } from 'lucide-react';
+import { ArrowUp, Move, Trash } from 'lucide-react';
 import { Button } from './ui/button';
 import clsx from 'clsx';
 
@@ -130,7 +130,7 @@ export const RenderNode = ({ render }) => {
                         {moveable ? (
                             <Button size="icon"
                                 className="flex items-center cursor-pointer rounded-full h-8 w-8 shadow-md bg-sky-400 hover:bg-sky-500 hover:scale-110 duration-200 transition-all" ref={drag}>
-                                <MoveRight className="h-4 w-4" />
+                                <Move className="h-4 w-4" />
                             </Button>
                         ) : null}
                         {id !== ROOT_NODE && (

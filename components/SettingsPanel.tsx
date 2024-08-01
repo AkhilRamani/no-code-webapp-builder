@@ -2,9 +2,10 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { useEditor } from "@craftjs/core";
 import { Settings2Icon, Trash2Icon } from "lucide-react";
+import clsx from "clsx";
 
 export const SettingsPanel = () => {
-  const { selected, actions } = useEditor((state, query) => {
+  const { selected, actions, enabled } = useEditor((state, query) => {
     const [currentNodeId] = state.events.selected;
 
     let selected;
@@ -19,13 +20,13 @@ export const SettingsPanel = () => {
       };
     }
 
-    return { selected };
+    return { selected, enabled: state.options.enabled };
   });
 
   return (
     // selected && (
     // <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] bg-[#FAFAFA]">
-    <div className="hidden border-l bg-white md:block  shrink-0 transition-all duration-75 w-72">
+    <div className={clsx("border-l bg-white shrink-0 transition-all duration-300 ease-out w-72", selected ? 'w-72' : 'w-0')}>
       {selected && <div className="flex h-full max-h-screen flex-col gap-2">
         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
           <div href="#" className="flex items-center gap-2 font-semibold" >
