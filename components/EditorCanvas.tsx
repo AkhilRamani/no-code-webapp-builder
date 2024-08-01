@@ -3,7 +3,7 @@ import { UserCanvas } from "./user/Canvas";
 import { UserContainer } from "./user/Container";
 import { UserText } from "./user/Text";
 import { useEffect } from "react";
-import { UserSidebar } from "./user/Sidebar";
+import { UserSidebar } from "./user/Sidebar/Sidebar";
 
 export const EditorCanvas = () => {
     const {
@@ -38,13 +38,16 @@ export const EditorCanvas = () => {
 
     // TODO: 
     return (
-        <div className="page-container flex w-full justify-center bg-zinc-100 py-10 overflow-auto" ref={(ref) => connectors.select(connectors.hover(ref, null), null)}>
-            <div className="craftjs-renderer flex w-full max-w-[1000px] bg-white shadow-xl rounded-md border overflow-auto">
-                <Frame>
-                    <Element is={UserCanvas} canvas>
-                        <UserSidebar />
-                    </Element>
-                </Frame>
+        // <div className="page-container flex w-full justify-center bg-zinc-100 py-10 overflow-auto" ref={(ref) => connectors.select(connectors.hover(ref, null), null)}>
+        <div className="page-container flex-1 overflow-auto">
+            <div className="craftjs-renderer grid items-center h-full" ref={(ref) => connectors.select(connectors.hover(ref, null), null)}>
+                <div className="flex w-full m-auto h-[60%] max-w-[1000px] bg-white shadow-xl rounded-md border overflow-auto">
+                    <Frame>
+                        <Element is={UserCanvas} canvas>
+                            <UserSidebar />
+                        </Element>
+                    </Frame>
+                </div>
             </div>
         </div>
     )

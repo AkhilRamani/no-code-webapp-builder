@@ -3,7 +3,7 @@ import { UserCanvas } from "./Canvas";
 import { UserCard, UserCardTitle, UserCardDescription, UserCardContainer, UserCardHeader, UserCardFooter } from "./Card";
 import { UserContainer } from "./Container";
 import { UserHeader } from "./Header";
-import { UserSidebar } from "./Sidebar";
+import { UserSidebar } from "./Sidebar/Sidebar";
 import { UserText } from "./Text";
 
 export const userComponents = {

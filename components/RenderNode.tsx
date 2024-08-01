@@ -2,7 +2,9 @@ import { useNode, useEditor } from '@craftjs/core';
 import { ROOT_NODE } from '@craftjs/utils';
 import React, { useEffect, useRef, useCallback } from 'react';
 import ReactDOM from 'react-dom';
-import { ArrowUp01, BinaryIcon, DeleteIcon, MoveRight, Trash, Trash2, Trash2Icon } from 'lucide-react';
+import { ArrowUp, MoveRight, Trash } from 'lucide-react';
+import { Button } from './ui/button';
+import clsx from 'clsx';
 
 export const RenderNode = ({ render }) => {
     const { id } = useNode();
@@ -29,12 +31,56 @@ export const RenderNode = ({ render }) => {
 
     const currentRef = useRef<HTMLDivElement>();
 
+
+    const highlightRef = useRef(null);
+    const updateHighlightPosition = useCallback(() => {
+        if (!dom || !highlightRef.current) return;
+        const rect = dom.getBoundingClientRect();
+        const highlight = highlightRef.current;
+
+        Object.assign(highlight.style, {
+            position: 'fixed',
+            left: `${rect.left}px`,
+            top: `${rect.top}px`,
+            width: `${rect.width}px`,
+            height: `${rect.height}px`,
+            // zIndex: '9998',
+        });
+    }, [dom]);
+
     useEffect(() => {
-        if (dom) {
-            if (isActive || isHover) dom.classList.add('component-selected');
-            else dom.classList.remove('component-selected');
+        if (!dom) return;
+
+        const elem = document.querySelector('.craftjs-renderer')
+        const highlight = document.createElement('div');
+        highlight.className = clsx('ring ring-offset-1 ring-[#9ccaff] shadow-[0_0_16px_#6eb2ff9e] pointer-events-none rounded-md', isActive && 'animate-pulse');
+        // document.body.appendChild(highlight);
+        elem.appendChild(highlight);
+        highlightRef.current = highlight;
+
+        let animFrameId: number | undefined = undefined
+        const updateAndCheck = () => {
+            updateHighlightPosition();
+            animFrameId = requestAnimationFrame(updateAndCheck);
+        };
+
+        if (isActive || isHover) {
+            updateAndCheck();
+        } else {
+            highlight.remove()
         }
-    }, [dom, isActive, isHover]);
+
+        return () => {
+            animFrameId && cancelAnimationFrame(animFrameId);
+            highlight.remove();
+        };
+    }, [dom, isActive, isHover, updateHighlightPosition]);
+    // useEffect(() => {
+    //     if (dom) {
+    //         if (isActive || isHover) dom.classList.add('component-selected');
+    //         else dom.classList.remove('component-selected');
+    //     }
+    // }, [dom, isActive, isHover]);
 
     const getPos = useCallback((dom: HTMLElement) => {
         const { top, left, bottom } = dom
@@ -51,14 +97,13 @@ export const RenderNode = ({ render }) => {
 
         if (!currentDOM) return;
         const { top, left } = getPos(dom);
+        console.log({ top, left })
         currentDOM.style.top = top;
         currentDOM.style.left = left;
     }, [dom, getPos]);
 
     useEffect(() => {
-        document
-            .querySelector('.craftjs-renderer')
-            .addEventListener('scroll', scroll);
+        document.querySelector('.craftjs-renderer').addEventListener('scroll', scroll);
 
         return () => {
             // FIXME: added ? to temporary fix error
@@ -68,49 +113,50 @@ export const RenderNode = ({ render }) => {
 
     return (
         <>
-            {isHover || isActive
+            {/* {isHover || isActive */}
+            {isActive
                 ? ReactDOM.createPortal(
-                    <div /> ||
+                    // <div />
+                    // ||
                     <div
                         ref={currentRef}
-                        className="px-2 py-2 bg-[#55a7ff] text-white fixed flex items-center text-xs leading-3 h-[29px] ml-3 -mt-[29px] z-[9999] rounded-t-md"
+                        className="fixed flex gap-2 -translate-y-3 -mt-[29px] rounded-t-xl transition-all duration-200 animate-in"
                         style={{
                             left: getPos(dom).left,
                             top: getPos(dom).top,
                         }}
                     >
-                        <h2 className="flex-1 mr-4">{name}</h2>
+                        {/* <h2 className="flex-1 mr-4">{name}</h2> */}
                         {moveable ? (
-                            <a className="p-0 opacity-90 flex items-center mr-2 cursor-move" ref={drag}>
-                                <div className="relative -top-1/2 -left-1/2">
-                                    <MoveRight className="fill-white w-[15px] h-[15px]" />
-                                </div>
-                            </a>
+                            <Button size="icon"
+                                className="flex items-center cursor-pointer rounded-full h-8 w-8 shadow-md bg-sky-400 hover:bg-sky-500 hover:scale-110 duration-200 transition-all" ref={drag}>
+                                <MoveRight className="h-4 w-4" />
+                            </Button>
                         ) : null}
                         {id !== ROOT_NODE && (
-                            <a
-                                className="p-0 opacity-90 flex items-center mr-2 cursor-pointer"
+                            <Button
+                                size="icon"
+                                className="flex items-center cursor-pointer rounded-full h-8 w-8 shadow-md bg-sky-400 hover:bg-sky-500 hover:scale-110 duration-200 transition-all"
                                 onClick={() => {
+                                    console.log(parent)
                                     actions.selectNode(parent);
                                 }}
                             >
-                                <div className="relative -top-1/2 -left-1/2">
-                                    <ArrowUp01 className="fill-white w-[15px] h-[15px]" />
-                                </div>
-                            </a>
+                                <ArrowUp className="h-4 w-4" />
+                            </Button>
                         )}
                         {deletable ? (
-                            <a
-                                className="p-0 opacity-90 flex items-center cursor-pointer"
+                            <Button
+                                size="icon"
+                                variant="destructive"
+                                className="rounded-full h-8 w-8 duration-200 transition-all bg-rose-400 shadow-md hover:scale-110 hover:bg-rose-500"
                                 onMouseDown={(e: React.MouseEvent) => {
                                     e.stopPropagation();
                                     actions.delete(id);
                                 }}
                             >
-                                <div className="relative -top-1/2 -left-1/2">
-                                    <Trash className="w-[15px] h-[15px]" />
-                                </div>
-                            </a>
+                                <Trash className="h-4 w-4" />
+                            </Button>
                         ) : null}
                     </div>,
                     document.querySelector('.page-container') as HTMLElement

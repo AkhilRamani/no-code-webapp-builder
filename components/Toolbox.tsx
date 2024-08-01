@@ -4,7 +4,7 @@ import { UserButton } from "./user/Button";
 import { UserText } from "./user/Text";
 import { UserContainer } from "./user/Container";
 import { UserCard } from "./user/Card";
-import { UserSidebar } from "./user/Sidebar";
+import { UserSidebar } from "./user/Sidebar/Sidebar";
 import { UserHeader } from "./user/Header";
 
 export const Toolbox: React.FC = () => {

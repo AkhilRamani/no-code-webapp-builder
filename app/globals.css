@@ -72,12 +72,13 @@
 .component-selected {
   @apply relative;
   /* outline: solid 2px #55a7ff50; */
-  outline: solid 1px #9ccaff;
+  /* outline-offset: -3px; */
   /* border-radius: 2px; */
   /* box-shadow: 1px 3px 10px rgba(128, 128, 128, 0.392); */
+
+  /* outline: solid 3px #9ccaff;
   box-shadow: 0 0 16px #6eb2ff9e;
-  transition-duration: 120ms;
-  z-index: 9999999;
+  transition-duration: 50ms; */
 }
 
 /* 
