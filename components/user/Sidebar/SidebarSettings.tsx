@@ -8,6 +8,7 @@ import { defaultSidebarMenus, UserSidebarMenuItem } from "./useSidebar.hook"
 import React, { useEffect, useState } from "react"
 import { useEditor, useNode } from "@craftjs/core"
 import { UserSidebarProps } from "./Sidebar"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 const SidebarMenuItem = ({ name, icon }: { name: string, icon: React.JSX.Element }) => {
     return (
@@ -58,14 +59,21 @@ export const SidebarSettings = () => {
 
                 </TabsContent>
                 <TabsContent value="setting">
-                    <Label>Menus</Label>
-                    <div className="grid gap-2 mt-3 ml-4 rounded-lg ">
-                        {localMenus.map(({ id, name, icon }) => <SidebarMenuItem key={`${id}-sbsm`} name={name} icon={icon} />)}
+                    <Accordion type="single" collapsible>
+                        <AccordionItem value="menus" className="pb-2" >
+                            <AccordionTrigger className="hover:no-underline"><Label>Menus</Label></AccordionTrigger>
+                            <AccordionContent>
+                                <div className="grid gap-2 mt-3 ml-4 rounded-lg ">
+                                    {localMenus.map(({ id, name, icon }) => <SidebarMenuItem key={`${id}-sbsm`} name={name} icon={icon} />)}
 
-                        <Button variant="secondary" className="h-7" onClick={onAddMenuClick}>
-                            <Plus className="h-4 w-4" />
-                        </Button>
-                    </div>
+                                    <Button variant="secondary" className="h-7" onClick={onAddMenuClick}>
+                                        <Plus className="h-4 w-4" />
+                                    </Button>
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+
                 </TabsContent>
             </Tabs>
             <div className="px-4 pt-1">
