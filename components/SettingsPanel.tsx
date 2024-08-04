@@ -26,7 +26,7 @@ export const SettingsPanel = () => {
   return (
     // selected && (
     // <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] bg-[#FAFAFA]">
-    <div className={clsx("border-l bg-white shrink-0 transition-all duration-300 ease-out w-72", selected ? 'w-72' : 'w-0')}>
+    <div className={clsx("border-l bg-white shrink-0 transition-all duration-300 ease-out w-72", selected ? 'mr-0' : '-mr-72')}>
       {selected && <div className="flex h-full max-h-screen flex-col gap-2">
         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
           <div href="#" className="flex items-center gap-2 font-semibold" >

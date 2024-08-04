@@ -1,15 +1,15 @@
-import { Bell, CommandIcon, Home, Package, ShoppingCart, Users } from "lucide-react";
+import { Bell, CommandIcon, Home, icons, Package, ShoppingCart, Users } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../../ui/button";
 import { Badge } from "../../ui/badge";
 import { useNode, Element, UserComponentConfig, UserComponent } from "@craftjs/core";
 import { UserContainer } from "../Container";
-import { UserText } from "../Text";
 import { UserHeader } from "../Header";
 import { useState } from "react";
 import clsx from "clsx";
 import { SidebarSettings } from "./SidebarSettings";
-import { defaultSidebarMenus, UserSidebarMenuItem, useSidebar } from "./useSidebar.hook";
+import { defaultSidebarMenus, UserSidebarMenuItem } from "./useSidebar.hook";
+import { IconsLucide } from "@/components/common/IconsLucide";
 
 export interface UserSidebarProps {
   menus: UserSidebarMenuItem[]
@@ -49,7 +49,7 @@ export const UserSidebar: UserComponent = ({ menus }) => {
                   className={clsx('flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary', selected === id && 'bg-slate-200 text-primary')}
                   onClick={() => setSelected(id)}
                 >
-                  {icon}
+                  <IconsLucide name={icon} className="h-4 w-4" />
                   {name}
                   {badgeText && <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">{badgeText}</Badge>}
                 </Link>
