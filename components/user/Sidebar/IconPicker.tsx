@@ -1,10 +1,12 @@
-import React, { useState, useMemo, useCallback } from 'react';
-import dynamic from 'next/dynamic'
+import React, { useState, useMemo, useCallback, ChangeEvent } from 'react';
 import { icons } from 'lucide-react';
-import dynamicIconImports from 'lucide-react/dynamicIconImports';
 import { Input } from '@/components/ui/input';
 
-const IconPicker = ({ onSelectIcon }) => {
+type IconPickerProps = {
+    onSelectIcon(iconName: string): void
+}
+
+const IconPicker = ({ onSelectIcon }: IconPickerProps) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const filteredIcons = useMemo(() => {
@@ -14,11 +16,11 @@ const IconPicker = ({ onSelectIcon }) => {
         );
     }, [searchTerm]);
 
-    const handleSearchChange = useCallback((e) => {
+    const handleSearchChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value);
     }, []);
 
-    const handleIconClick = useCallback((iconName) => {
+    const handleIconClick = useCallback((iconName: string) => {
         onSelectIcon(iconName);
     }, [onSelectIcon]);
 
@@ -33,7 +35,7 @@ const IconPicker = ({ onSelectIcon }) => {
             <div className="mt-3 grid grid-cols-5 grid-cols-auto-fill-50 gap-2 h-96 overflow-auto content-start border rounded-lg p-3">
                 {filteredIcons.map(iconName => {
                     // const LucideIcon = dynamic(dynamicIconImports[iconName]);
-                    const LucideIcon = icons[iconName]
+                    const LucideIcon = icons[iconName as keyof typeof icons]
 
                     return (
                         <button

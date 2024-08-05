@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import { Check } from "lucide-react"
+import { Check, Trash, Trash2 } from "lucide-react"
 import { UserSidebarMenuItem } from "../useSidebar.hook"
 import { IconsLucide } from "@/components/common/IconsLucide"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
@@ -13,10 +13,11 @@ type SidebarMenuDialogProps = {
     data: UserSidebarMenuItem | null,
     onOpenChange(open: boolean): void,
     open: boolean | undefined,
-    onSubmit(menuData: UserSidebarMenuItem): void
+    onSubmit(menuData: UserSidebarMenuItem): void,
+    onDelete: (id: number) => void
 }
 
-export const SidebarMenuDialog = ({ data, open, onOpenChange, onSubmit }: SidebarMenuDialogProps) => {
+export const SidebarMenuDialog = ({ data, open, onOpenChange, onSubmit, onDelete }: SidebarMenuDialogProps) => {
     const [icon, setIcon] = useState<string | undefined>(undefined)
     const [name, setName] = useState<string | undefined>(undefined)
 
@@ -44,6 +45,13 @@ export const SidebarMenuDialog = ({ data, open, onOpenChange, onSubmit }: Sideba
 
     }
 
+    const handleDelete = () => {
+        if (data) {
+            onDelete(data.id);
+            onOpenChange(false);
+        }
+    };
+
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="!rounded-xl">
@@ -65,8 +73,11 @@ export const SidebarMenuDialog = ({ data, open, onOpenChange, onSubmit }: Sideba
                     <Input placeholder="Display name" required value={name} onChange={e => setName(e.target.value)} />
                 </div>
                 <DialogFooter >
+                    <Button variant="destructive" onClick={handleDelete}>
+                        <Trash2 className="h-5" />
+                    </Button>
                     <Button type="submit" onClick={onSubmitClick} disabled={!name}>
-                        <Check />
+                        <Check className="h-5 mx-4" />
                     </Button>
                 </DialogFooter>
             </DialogContent>

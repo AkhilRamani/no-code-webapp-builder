@@ -7,7 +7,7 @@ type LucideIconProps = {
 
 export const IconsLucide = ({ name, ...rest }: LucideIconProps) => {
 
-    const LucideIcon = icons[name ?? 'BoxSelect'];
+    const LucideIcon = icons[(name ?? 'BoxSelect') as keyof typeof icons];
 
     return LucideIcon && <LucideIcon {...rest} />;
 }
