@@ -33,11 +33,12 @@ export const SidebarMenus = () => {
     };
 
     const onAddMenuClick = () => {
+        const id = menus.at(-1)?.id || 0
         setProp((props: UserSidebarProps) => {
             props.menus = [
                 ...props.menus,
                 {
-                    id: props.menus.length + 1,
+                    id: id + 1,
                     name: 'New menu',
                     icon: 'Box'
                 }
@@ -84,7 +85,7 @@ export const SidebarMenus = () => {
 
                         <SidebarMenuDialog
                             open={menuDialog !== null}
-                            data={menuDialog ? menus[menuDialog] : null}
+                            data={menus[menuDialog ?? -1]}
                             onOpenChange={handleDialogOpenChange}
                             onSubmit={onEditMenuSubmit}
                             onDelete={onDeleteMenu}

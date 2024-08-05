@@ -1,16 +1,15 @@
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import { Check, Trash, Trash2 } from "lucide-react"
+import { Check, Trash2 } from "lucide-react"
 import { UserSidebarMenuItem } from "../useSidebar.hook"
 import { IconsLucide } from "@/components/common/IconsLucide"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import IconPicker from "../IconPicker"
 import { useEffect, useState } from "react"
-import { DialogClose } from "@radix-ui/react-dialog"
 
 type SidebarMenuDialogProps = {
-    data: UserSidebarMenuItem | null,
+    data: UserSidebarMenuItem | undefined,
     onOpenChange(open: boolean): void,
     open: boolean | undefined,
     onSubmit(menuData: UserSidebarMenuItem): void,

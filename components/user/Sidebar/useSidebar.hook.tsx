@@ -25,21 +25,3 @@ export const defaultSidebarMenus = [
         icon: 'Users'
     },
 ]
-
-export const useSidebar = () => {
-    const [menus, setMenus] = useState(defaultSidebarMenus)
-
-    const addMenu = (name: string) => {
-        setMenus(prevState => ([...menus, {
-            id: prevState.length + 1,
-            name,
-            icon: 'Package'
-        }]))
-    }
-
-    return {
-        menus,
-        addMenu
-    }
-
-}

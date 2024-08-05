@@ -3,7 +3,6 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { TabsContent } from "@radix-ui/react-tabs"
 import React from "react"
 import { useNode } from "@craftjs/core"
-import IconPicker from "./IconPicker"
 import { SidebarMenus } from "./settings/SidebarMenus"
 
 export const SidebarSettings = () => {
@@ -28,7 +27,6 @@ export const SidebarSettings = () => {
                 <Separator className="my-4" />
                 <TabsContent value="style">
 
-                    <IconPicker onSelectIcon={() => { }} />
 
                 </TabsContent>
                 <TabsContent value="setting">
