@@ -4,6 +4,7 @@ import { UserCard, UserCardTitle, UserCardDescription, UserCardContainer, UserCa
 import { UserContainer } from "./Container";
 import { UserHeader } from "./Header";
 import { UserSidebar } from "./Sidebar/Sidebar";
+import { UserTable } from "./table/UserTable";
 import { UserText } from "./Text/Text";
 
 export const userComponents = {
@@ -18,5 +19,6 @@ export const userComponents = {
   UserCardHeader,
   UserCardFooter,
   UserSidebar,
-  UserHeader
+  UserHeader,
+  UserTable
 };

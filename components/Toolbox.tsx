@@ -7,6 +7,7 @@ import { UserCard } from "./user/Card";
 import { UserSidebar } from "./user/Sidebar/Sidebar";
 import { UserHeader } from "./user/Header";
 import clsx from "clsx";
+import { UserTable } from "./user/table/UserTable";
 
 export const Toolbox: React.FC = () => {
   const { connectors, query, enabled } = useEditor(state => ({
@@ -24,6 +25,7 @@ export const Toolbox: React.FC = () => {
           <Button ref={(ref) => connectors.create(ref, <UserCard />)}>Card</Button>
           <Button ref={(ref) => connectors.create(ref, <UserSidebar />)}>Sidebar</Button>
           <Button ref={(ref) => connectors.create(ref, <UserHeader />)}>Header</Button>
+          <Button ref={(ref) => connectors.create(ref, <UserTable />)}>Table</Button>
         </div>
       </div>
     </div>
