@@ -32,7 +32,7 @@ const IconPicker = ({ onSelectIcon }: IconPickerProps) => {
                 value={searchTerm}
                 onChange={handleSearchChange}
             />
-            <div className="mt-3 grid grid-cols-5 grid-cols-auto-fill-50 gap-2 h-96 overflow-auto content-start border rounded-lg p-3">
+            <div className="mt-3 grid grid-cols-5 grid-cols-auto-fill-50 gap-2 h-[33vh] overflow-auto content-start border rounded-lg p-3">
                 {filteredIcons.map(iconName => {
                     // const LucideIcon = dynamic(dynamicIconImports[iconName]);
                     const LucideIcon = icons[iconName as keyof typeof icons]

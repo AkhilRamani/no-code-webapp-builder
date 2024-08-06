@@ -12,7 +12,7 @@ export const SidebarSettings = () => {
 
     return (
         <div className="">
-            <Tabs className="-my-2 p-4" defaultValue="style">
+            <Tabs className="-my-2 p-4" defaultValue="setting">
                 <TabsList className="w-full  rounded-lg">
                     <TabsTrigger className="flex-1 h-full data-[state=active]:shadow-md rounded-lg" value="style" >
                         {/* <Brush className="h-5 w-5 mr-2" /> */}

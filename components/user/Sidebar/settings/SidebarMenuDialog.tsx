@@ -65,7 +65,7 @@ export const SidebarMenuDialog = ({ data, open, onOpenChange, onSubmit, onDelete
                                 <IconsLucide name={icon} className="h-5 w-5" />
                             </Button>
                         </PopoverTrigger>
-                        <PopoverContent className="rounded-xl px-3 py-4">
+                        <PopoverContent className="rounded-xl px-3 pb-3">
                             <IconPicker onSelectIcon={onIconSelect} />
                         </PopoverContent>
                     </Popover>
