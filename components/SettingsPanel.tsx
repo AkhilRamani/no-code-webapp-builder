@@ -27,8 +27,8 @@ export const SettingsPanel = () => {
     // selected && (
     // <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] bg-[#FAFAFA]">
     <div className={clsx("border-l bg-white shrink-0 transition-all duration-300 ease-out w-72", selected ? 'mr-0' : '-mr-72')}>
-      {selected && <div className="flex h-full max-h-screen flex-col gap-2">
-        <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+      {selected && <div className="flex h-full max-h-screen flex-col">
+        <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6 shrink-0">
           <div href="#" className="flex items-center gap-2 font-semibold" >
             <Settings2Icon className="h-6 w-6" />
             <span className="">{selected.displayName}</span>
@@ -46,7 +46,7 @@ export const SettingsPanel = () => {
           )}
         </div>
 
-        <div className="">{selected.settings && React.createElement(selected.settings)}</div>
+        <div className="h-full scroll-auto">{selected.settings && React.createElement(selected.settings)}</div>
       </div>}
 
     </div>

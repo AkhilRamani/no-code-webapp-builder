@@ -1,8 +1,5 @@
 import { Frame, useEditor, Element } from "@craftjs/core";
 import { UserCanvas } from "./user/Canvas";
-import { UserContainer } from "./user/Container";
-import { UserText } from "./user/Text";
-import { useEffect } from "react";
 import { UserSidebar } from "./user/Sidebar/Sidebar";
 import clsx from "clsx";
 

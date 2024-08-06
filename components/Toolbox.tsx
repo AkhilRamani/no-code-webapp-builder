@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Element, useEditor } from "@craftjs/core";
 import { UserButton } from "./user/Button";
-import { UserText } from "./user/Text";
+import { UserText } from "./user/Text/Text";
 import { UserContainer } from "./user/Container";
 import { UserCard } from "./user/Card";
 import { UserSidebar } from "./user/Sidebar/Sidebar";
