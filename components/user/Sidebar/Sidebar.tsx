@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Button } from "../../ui/button";
 import { Badge } from "../../ui/badge";
 import { useNode, Element, UserComponentConfig, UserComponent } from "@craftjs/core";
-import { UserContainer } from "../Container";
+import { UserContainer } from "../container/Container";
 import { UserHeader } from "../Header";
 import { useState } from "react";
 import clsx from "clsx";
@@ -64,7 +64,7 @@ export const UserSidebar: UserComponent = ({ menus }) => {
           <UserText text="Title text" fontSize="20px" />
         </Element> */}
         <UserHeader />
-        <Element id='page contents' is={UserContainer} classNames={{ padding: 'p-4 h-full overflow-auto' }} canvas>
+        <Element id='page contents' is={UserContainer} classNames={{ all: 'p-4 h-full overflow-auto' }} canvas>
 
         </Element>
       </Element>

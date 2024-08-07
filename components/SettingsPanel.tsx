@@ -46,7 +46,7 @@ export const SettingsPanel = () => {
           )}
         </div>
 
-        <div className="h-full scroll-auto">{selected.settings && React.createElement(selected.settings)}</div>
+        <div className="h-full overflow-auto pb-10">{selected.settings && React.createElement(selected.settings)}</div>
       </div>}
 
     </div>

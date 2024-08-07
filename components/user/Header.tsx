@@ -1,6 +1,6 @@
 import { Element } from "@craftjs/core";
 import { UserText } from "./Text/Text";
-import { UserContainer } from "./Container";
+import { UserContainer } from "./container/Container";
 
 export const UserHeader = () => {
     return (
