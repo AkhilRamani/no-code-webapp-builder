@@ -1,4 +1,4 @@
-import { UserButton } from "./Button";
+import { UserButton } from "./button/Button";
 import { UserCanvas } from "./Canvas";
 import { UserCard, UserCardTitle, UserCardDescription, UserCardContainer, UserCardHeader, UserCardFooter } from "./Card";
 import { UserContainer } from "./Container";

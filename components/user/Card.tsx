@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { useNode, Element } from "@craftjs/core";
 import { withNode } from "./connector";
-import { UserButton } from "./Button";
+import { UserButton } from "./button/Button";
 
 // export const CardHeader = ({ children }) => {
 //   const { connectors: { connect } } = useNode();
