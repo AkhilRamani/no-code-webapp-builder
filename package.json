@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint --quiet"
   },
   "dependencies": {
     "@craftjs/core": "^0.2.8",
