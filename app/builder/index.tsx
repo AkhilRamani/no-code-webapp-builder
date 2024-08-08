@@ -1,6 +1,6 @@
 "use client";
 
-import { Toolbox } from "../../components/Toolbox";
+import { Toolbox } from "../../components/toolbox/Toolbox";
 import { SettingsPanel } from "../../components/SettingsPanel";
 import { Topbar } from "../../components/Topbar";
 import { Editor } from "@craftjs/core";

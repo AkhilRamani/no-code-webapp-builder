@@ -12,7 +12,7 @@ export const UserContainer = ({ background, children, classNames }: UserContaine
     <div
       ref={(ref) => connect(drag(ref))}
       // className={clsx(!children && 'p-4', 'w-full', classNames && Object.values(classNames).reduce((acc, value) => (acc += ` ${value}`), ""))}
-      className={clsx(!children && 'p-4', 'w-full', Object.values(classNames ?? {}))}
+      className={clsx(!children && 'p-4 min-h-16 border', 'w-full', Object.values(classNames ?? {}))}
       // className={`p-4 w-full ${classNames?.direction}`}
       // className={`p-4 w-full`}
       style={{ background }}
@@ -29,6 +29,7 @@ UserContainer.craft = {
   props: {
     classNames: {
       direction: "flex-col",
+      radius: 'rounded-lg'
     },
   },
   related: {

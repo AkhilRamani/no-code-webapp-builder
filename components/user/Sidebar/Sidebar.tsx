@@ -64,7 +64,7 @@ export const UserSidebar: UserComponent = ({ menus }) => {
           <UserText text="Title text" fontSize="20px" />
         </Element> */}
         <UserHeader />
-        <Element id='page contents' is={UserContainer} classNames={{ all: 'p-4 h-full overflow-auto' }} canvas>
+        <Element id='page contents' is={UserContainer} classNames={{ all: 'p-4 h-full overflow-auto border-none' }} canvas>
 
         </Element>
       </Element>

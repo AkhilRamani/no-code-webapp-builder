@@ -11,7 +11,7 @@ export const SidebarSettings = () => {
     }))
 
     return (
-        <div className="">
+        <div className="mt-2">
             <Tabs className="-my-2 p-4" defaultValue="setting">
                 <TabsList className="w-full  rounded-lg">
                     <TabsTrigger className="flex-1 h-full data-[state=active]:shadow-md rounded-lg" value="style" >

@@ -79,7 +79,7 @@ export const SidebarMenus = () => {
                             />
                         ))}
 
-                        <Button variant="secondary" className="h-7" onClick={onAddMenuClick}>
+                        <Button variant="secondary" className="h-7 rounded-lg" onClick={onAddMenuClick}>
                             <Plus className="h-4 w-4" />
                         </Button>
 

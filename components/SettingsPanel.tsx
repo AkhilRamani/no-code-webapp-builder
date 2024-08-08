@@ -29,7 +29,7 @@ export const SettingsPanel = () => {
     <div className={clsx("border-l bg-white shrink-0 transition-all duration-300 ease-out w-72", selected ? 'mr-0' : '-mr-72')}>
       {selected && <div className="flex h-full max-h-screen flex-col">
         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6 shrink-0">
-          <div href="#" className="flex items-center gap-2 font-semibold" >
+          <div className="flex items-center gap-2 font-semibold" >
             <Settings2Icon className="h-6 w-6" />
             <span className="">{selected.displayName}</span>
           </div>

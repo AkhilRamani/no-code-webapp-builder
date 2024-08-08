@@ -25,7 +25,7 @@ export const TextThicknessSetting = ({ selected, onChange }: TextThicknessSettin
             <Label>Thickness</Label>
 
             <Select value={selected} onValueChange={onChange}>
-                <SelectTrigger className="w-24 font-semibold rounded-lg">
+                <SelectTrigger className="w-32 font-semibold rounded-lg">
                     <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="rounded-lg">

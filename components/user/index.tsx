@@ -1,3 +1,4 @@
+import { UserAvatar } from "./avatar/UserAvatar";
 import { UserButton } from "./button/Button";
 import { UserCanvas } from "./Canvas";
 import { UserCard, UserCardTitle, UserCardDescription, UserCardContainer, UserCardHeader, UserCardFooter } from "./Card";
@@ -6,6 +7,7 @@ import { UserHeader } from "./Header";
 import { UserSidebar } from "./Sidebar/Sidebar";
 import { UserTable } from "./table/UserTable";
 import { UserText } from "./Text/Text";
+import { UserNumberCard } from "./visulisation/userNumberCard/UserNumberCard";
 
 export const userComponents = {
   UserCanvas,
@@ -20,5 +22,7 @@ export const userComponents = {
   UserCardFooter,
   UserSidebar,
   UserHeader,
-  UserTable
+  UserTable,
+  UserAvatar,
+  UserNumberCard
 };

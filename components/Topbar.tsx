@@ -34,8 +34,8 @@ export const Topbar: React.FC = () => {
     <div className="px-4 py-4 border-b">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <Switch id="enable-switch" checked={enabled} onCheckedChange={(value) => actions.setOptions((options) => (options.enabled = value))} />
-          <Label htmlFor="enable-switch">Enable</Label>
+          <Switch id="enable-switch" checked={!enabled} onCheckedChange={(value) => actions.setOptions((options) => (options.enabled = !value))} />
+          <Label htmlFor="enable-switch">Preview</Label>
         </div>
 
         <div className="flex gap-4">

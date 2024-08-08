@@ -1,3 +1,4 @@
+import { UserContainerAlignValues, UserContainerJustifyValues } from "./settings/UserContainerAlignSetting";
 import { UserContainerBorderSettingProp } from "./settings/UserContainerBorderSetting";
 import { UserContainerGapSettingProps } from "./settings/UserContainerGapSetting";
 import { UserContainerShadowSetting } from "./settings/UserContainerShadowSetting";
@@ -12,6 +13,7 @@ export type UserContainerClassNames = {
     border?: 'border';
     radius?: UserContainerBorderSettingProp['radius'];
     shadow?: UserContainerShadowSetting['selected'];
+    alignment?: UserContainerAlignValues | UserContainerJustifyValues;
     all?: string;
 };
 

@@ -6,7 +6,7 @@ import { Switch } from "@/components/ui/switch";
 const presets = [
     { value: 'rounded-none', label: 'None' },
     { value: 'rounded-sm', label: 'SM' },
-    { value: 'rounded', label: 'Default' },
+    { value: 'rounded', label: 'Normal' },
     { value: 'rounded-md', label: 'MD' },
     { value: 'rounded-lg', label: 'LG' },
     { value: 'rounded-xl', label: 'XL' },
@@ -30,7 +30,7 @@ export const UserContainerBorderSetting = ({ enabled, onChange, radius, onRadius
         </div>
         <div className="mt-4 rounded flex justify-between items-center">
             <Label>Roundness</Label>
-            <Select value={radius} onValueChange={onRadiusChange}>
+            <Select value={radius} onValueChange={onRadiusChange as (value: string) => void}>
                 <SelectTrigger className="font-semibold w-32">
                     <SelectValue />
                 </SelectTrigger>
@@ -43,5 +43,5 @@ export const UserContainerBorderSetting = ({ enabled, onChange, radius, onRadius
                 </SelectContent>
             </Select>
         </div>
-    </div>
+    </div >
 )
