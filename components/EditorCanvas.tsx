@@ -42,7 +42,7 @@ export const EditorCanvas = () => {
                 <div className={clsx("flex w-full m-auto bg-white shadow-xl rounded-md border overflow-auto", 'ease-in-out', enabled ? 'h-[570px] max-w-[1000px] duration-500' : 'max-w-[90%] h-[90%] duration-1000 delay-100')}>
                     <Frame>
                         <Element is={UserCanvas} canvas>
-                            <UserSidebar />
+                            {/* <UserSidebar /> */}
                         </Element>
                     </Frame>
                 </div>
