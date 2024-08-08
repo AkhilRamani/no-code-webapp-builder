@@ -15,7 +15,7 @@ export default function Builder() {
       <div className="flex flex-col h-full">
         <Topbar />
 
-        <div className="flex flex-grow w-full bg-zinc-100 overflow-auto">
+        <div className="flex flex-grow w-full bg-zinc-100 overflow-hidden">
           <Toolbox />
 
           <EditorCanvas />
