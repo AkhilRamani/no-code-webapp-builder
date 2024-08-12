@@ -77,6 +77,7 @@ const ContainerSettings = () => {
 };
 
 UserCanvas.craft = {
+  displayName: 'Canvas',
   props: {
     classNames: {
       direction: "flex-col",

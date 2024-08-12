@@ -173,3 +173,7 @@ export const UserTable = () => {
         </div>
     )
 }
+
+UserTable.craft = {
+    displayName: 'Table'
+}

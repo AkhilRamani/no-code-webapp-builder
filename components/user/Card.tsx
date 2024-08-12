@@ -65,3 +65,7 @@ export const UserCard = () => {
     </UserCardContainer>
   );
 };
+
+UserCard.craft = {
+  displayName: 'Card 1'
+}
