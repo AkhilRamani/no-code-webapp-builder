@@ -14,6 +14,7 @@ export type UserContainerClassNames = {
     radius?: UserContainerBorderSettingProp['radius'];
     shadow?: UserContainerShadowSetting['selected'];
     alignment?: UserContainerAlignValues | UserContainerJustifyValues;
+    hidden?: 'hidden';
     all?: string;
 };
 

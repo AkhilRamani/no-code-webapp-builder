@@ -2,12 +2,16 @@ import { Element } from "@craftjs/core";
 import { UserText } from "./Text/Text";
 import { UserContainer } from "./container/Container";
 
-export const UserHeader = () => {
+interface UserHeaderProps {
+    title?: string
+}
+
+export const UserHeader = ({ title }: UserHeaderProps) => {
     return (
         // <Element id="Header" is={UserContainer} classNames={{ all: 'h-[60px] border-b bg-muted/40 flex items-center justify-between px-6' }} canvas>
         <UserContainer classNames={{ all: 'h-[60px] border-b bg-muted/40 flex items-center justify-between px-6 shrink-0' }}>
             <div className="shrink-0 w-fit">
-                <Element id='Page title' is={UserText} text="Page title" canvas />
+                <Element id='Page title' is={UserText} text={title || "Page title"} canvas />
                 {/* <UserText text="Page title" fontSize="20px" /> */}
             </div>
             <Element id="Header menus" is={UserContainer} classNames={{ all: 'flex items-center justify-center !w-fit gap-4' }} canvas>
@@ -15,4 +19,8 @@ export const UserHeader = () => {
             </Element>
         </UserContainer>
     )
+}
+
+UserHeader.craft = {
+    displayName: 'Page Header'
 }
