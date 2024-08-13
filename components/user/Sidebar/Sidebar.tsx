@@ -86,15 +86,10 @@ export const UserSidebar: UserComponent = ({ menus }) => {
         </div>
       </div>
 
-      {/* <Element id='siedbar-page-name' */}
-      {/* <Element is={UserContainer} classNames={{ all: 'h-[60px] border-b bg-muted/40' }} canvas>
-    <UserText text="Title text" fontSize="20px" />
-  </Element> */}
-
       {menus?.map(({ id: menuId, name }: UserSidebarMenuItem) => {
         const template = `${menuId}-sb-page`
         return (
-          <Element key={template} id={template} is={UserContainer} classNames={{ all: 'flex flex-col overflow-auto animate-in', hidden: selectedMenu === menuId ? undefined : 'hidden' }} canvas>
+          <Element key={template} id={template} is={UserContainer} classNames={{ all: 'flex flex-col overflow-auto', hidden: selectedMenu === menuId ? undefined : 'hidden' }} canvas>
             <UserHeader title={name} />
             <Element id='page contents' is={UserContainer} classNames={{ all: 'p-4 h-full overflow-auto border-none' }} canvas>
 
