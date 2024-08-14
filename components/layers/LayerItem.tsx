@@ -43,8 +43,6 @@ export const LayerItem = ({ children }: DefaultLayerProps) => {
         `
     );
 
-    console.log(children)
-
     return (
         <div ref={layer} className={clsx('gap-4 rounded-lg', hovered && 'bg-slate-100', hasChildCanvases && expanded && 'mb-3', hidden && 'opacity-60')}>
             <LayerHeader />
