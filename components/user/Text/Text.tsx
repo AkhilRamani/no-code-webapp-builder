@@ -29,7 +29,7 @@ export const UserText = ({ text, classNames }: UserTextProps) => {
         html={text}
         onChange={(e) => setProp((props) => (props.text = e.target.value.replace(/<\/?[^>]+(>|$)/g, "")))}
         tagName="h1"
-        className={clsx(Object.values(classNames ?? {}))}
+        className={clsx('outline-none', Object.values(classNames ?? {}))}
       />
       {/* <p style={{ fontSize }}>{text}</p> */}
     </div>

@@ -10,6 +10,7 @@ import clsx from "clsx";
 import { SidebarSettings } from "./SidebarSettings";
 import { defaultSidebarMenus, UserSidebarMenuItem } from "./useSidebar.hook";
 import { IconsLucide } from "@/components/common/IconsLucide";
+import { UserText } from "../Text/Text";
 
 export interface UserSidebarProps {
   menus: UserSidebarMenuItem[];
@@ -60,7 +61,8 @@ export const UserSidebar: UserComponent = ({ menus }) => {
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Link href="#" className="flex items-center gap-2 font-semibold" prefetch={false}>
               <CommandIcon className="h-6 w-6" />
-              <span className="">Company</span>
+              {/* <span className="">Company</span> */}
+              <Element id="sb-title" is={UserText} text="Company" classNames={{ all: 'mt-0.5', thickNess: 'font-semibold' }} />
             </Link>
 
             <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
