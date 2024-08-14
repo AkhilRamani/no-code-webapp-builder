@@ -35,7 +35,7 @@ export const EditableLayerName = () => {
             disabled={!editingName}
             className={clsx(
                 'px-1 py-0.5 outline-none rounded text-ellipsis text-nowrap overflow-hidden',
-                editingName && 'bg-white text-muted-foreground'
+                editingName && 'bg-white text-muted-foreground text-clip'
             )}
             ref={(ref) => {
                 if (ref) {
