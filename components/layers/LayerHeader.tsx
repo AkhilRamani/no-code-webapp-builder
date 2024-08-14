@@ -10,11 +10,13 @@ export const LayerHeader = () => {
         id,
         depth,
         expanded,
+        hovered,
         children,
         connectors: { drag, layerHeader },
         actions: { toggleLayer },
     } = useLayer((layer) => ({
         expanded: layer.expanded,
+        hovered: layer.event.hovered,
     }));
 
     const { hidden, actions, selected, topLevel } = useEditor((state, query) => ({
@@ -55,13 +57,13 @@ export const LayerHeader = () => {
                 </div>
             </div>
 
-            <div
+            {(hovered || hidden) && <div
                 className={hideClasses}
                 onClick={() => actions.setHidden(id, !hidden)}
             >
                 {/* <Eye className={clsx('h-3 w-3', hidden && 'opacity-30')} /> */}
                 <Eye className={clsx('h-3 w-3')} />
-            </div>
+            </div>}
         </div>
     );
 };
