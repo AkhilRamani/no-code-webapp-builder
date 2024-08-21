@@ -6,6 +6,7 @@ import { UserContainer } from "./container/Container";
 import { UserHeader } from "./Header";
 import { UserSidebar } from "./Sidebar/Sidebar";
 import { UserTable } from "./table/UserTable";
+import { UserTableDynamic } from "./table/UserTableDynamic";
 import { UserText } from "./Text/Text";
 import { UserNumberCard } from "./visulisation/userNumberCard/UserNumberCard";
 
@@ -24,5 +25,6 @@ export const userComponents = {
   UserHeader,
   UserTable,
   UserAvatar,
-  UserNumberCard
+  UserNumberCard,
+  UserTableDynamic
 };

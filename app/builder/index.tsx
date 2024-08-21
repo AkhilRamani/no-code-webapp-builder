@@ -9,7 +9,6 @@ import { RenderNode } from "@/components/RenderNode";
 import { EditorCanvas } from "@/components/EditorCanvas";
 
 export default function Builder() {
-
   return (
     <Editor resolver={userComponents} onRender={RenderNode}>
       <div className="flex flex-col h-full">

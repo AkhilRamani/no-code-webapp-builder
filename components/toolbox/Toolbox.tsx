@@ -15,6 +15,7 @@ import { UserNumberCard } from "../user/visulisation/userNumberCard/UserNumberCa
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Separator } from "../ui/separator";
 import { Layers } from "../layers/Layers";
+import { UserTableDynamic } from "../user/table/UserTableDynamic";
 
 type ConnectorRef = NodeSelectorWrapper | HTMLElement | null;
 
@@ -59,6 +60,7 @@ export const Toolbox: React.FC = () => {
               <Button ref={(ref) => connectors.create(ref, <UserHeader />)}>Header</Button>
               <Button ref={(ref) => connectors.create(ref, <UserTable />)}>Table</Button>
               <Button ref={(ref) => connectors.create(ref, <UserNumberCard />)}>Number card</Button>
+              <Button ref={(ref) => connectors.create(ref, <UserTableDynamic />)}>Table - Dynamic</Button>
             </div>
 
           </TabsContent>

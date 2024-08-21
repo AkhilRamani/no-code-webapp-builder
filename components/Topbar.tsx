@@ -8,6 +8,10 @@ import lz from "lzutf8";
 import copy from "copy-to-clipboard";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { Input } from "./ui/input";
+import clsx from "clsx";
+import { Database, DatabaseZap, MonitorPlay, Play } from "lucide-react";
+import { Toggle } from "./ui/toggle";
+import { DatabaseDialog } from "./database/DatabaseDialog";
 
 export const Topbar: React.FC = () => {
   const { actions, query, enabled } = useEditor((state) => ({
@@ -31,12 +35,13 @@ export const Topbar: React.FC = () => {
   };
 
   return (
-    <div className="px-4 py-4 border-b">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <Switch id="enable-switch" checked={!enabled} onCheckedChange={(value) => actions.setOptions((options) => (options.enabled = !value))} />
-          <Label htmlFor="enable-switch">Preview</Label>
-        </div>
+    <div className="bg-zinc-100">
+      <div className={clsx("flex items-center px-4 py-4 bg-white border-b justify-between duration-500 ease-out", !enabled && '-mt-20 mb-10')}>
+        {/* <Button size='sm' variant='secondary' className="rounded-lg gap-2 text-muted-foreground hover:text-primary">
+          <Database className="h-[1.1rem] w-[1.1rem]" />
+        </Button> */}
+
+        <DatabaseDialog />
 
         <div className="flex gap-4">
           <Button variant="secondary" size="sm" onClick={onCopyExportClick}>
@@ -64,6 +69,12 @@ export const Topbar: React.FC = () => {
             </SheetContent>
           </Sheet>
         </div>
+      </div>
+
+      <div className="absolute top-4 flex w-full pointer-events-none">
+        <Button className="rounded-xl mx-auto pointer-events-auto" variant={enabled ? 'secondary' : 'default'} size='icon' onClick={() => actions.setOptions((options) => (options.enabled = !options.enabled))}>
+          <Play className="h-5 w-5 fill-current" />
+        </Button>
       </div>
     </div>
   );
