@@ -1,43 +1,93 @@
 import { Button } from "@/components/ui/button"
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Database } from "lucide-react"
-import { DatabaseLayout } from "./DatabaseLayout"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Database, Loader2, LoaderPinwheel, Plus, Table } from "lucide-react"
+import React, { lazy, Suspense, useEffect, useState } from "react"
+import { TableSchema, useTableStore } from "@/lib/store/useTableStore"
+import { EditTableNamePopover } from "./TableEditPopover"
+
+const DatabaseLayout = lazy(() => import("./DatabaseLayout.tsx"));
 
 export const DatabaseDialog = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const { tables, updateTables } = useTableStore()
+    // const [localTables, setLocalTables] = useState(tables)
+    const [localTables, setLocalTables] = useState<TableSchema[]>([])
+
+    useEffect(() => {
+        return setLocalTables(tables)
+    }, [tables])
+
+    const handleSaveChanges = () => {
+        updateTables(localTables)
+        // Close the dialog here
+        setIsOpen(false);
+    }
+
+    const createTable = (tableName: string) => {
+        setLocalTables(localTables => ([
+            ...localTables,
+            {
+                tableName,
+                schema: []
+            }
+        ]));
+    }
+
+    const _onOpenChange = (isOpen: boolean) => {
+        setIsOpen(isOpen);
+        isOpen && setLocalTables(tables);
+    }
+
+    const isTables = localTables && localTables.length;
+
     return (
-        <Dialog>
+        <Dialog open={isOpen} onOpenChange={_onOpenChange}>
             <DialogTrigger asChild>
                 <Button size='sm' variant='secondary' className="rounded-lg gap-2 text-muted-foreground hover:bg-slate-200 [&>svg]:hover:opacity-90 hover:text-primary">
-                    <Database className="h-[1.1rem] w-[1.1rem] text-secondary fill-primary opacity-65" />
+                    <Database className="h-[1.1rem] w-[1.1rem] text-secondary fill-primary opacity-65 shrink-0" />
                     {/* Database */}
                 </Button>
             </DialogTrigger>
-            <DialogContent className="min-w-max h-5/6">
-                <div className="flex flex-col min-w-[70vw] h-full">
-                    <DialogHeader className="-mx-6 px-6 pb-5 border-b">
-                        <DialogTitle>Database</DialogTitle>
-                        <DialogDescription>
-                            Create tables for your application as you need
-                        </DialogDescription>
-                    </DialogHeader>
-                    <div className="pt-6 pb-4 flex-1">
-                        <DatabaseLayout />
-                    </div>
-                    <DialogFooter className="self-end">
-                        <Button type="submit">Save changes</Button>
-                    </DialogFooter>
 
+            <DialogContent className="min-w-[70vw] h-5/6 flex flex-col">
+                <DialogHeader className="-mx-6 px-6 pb-5 border-b">
+                    <DialogTitle>Database</DialogTitle>
+                    <DialogDescription>
+                        Create tables for your application as you need
+                    </DialogDescription>
+                </DialogHeader>
+                <div className="grow pt-6 pb-2 flex overflow-auto">
+                    {/* <DatabaseLayout tables={localTables} setTables={setLocalTables} /> */}
+                    <Suspense fallback={<div className="h-full flex flex-1 justify-center"><Loader2 className="m-auto animate-spin h-10 w-10 opacity-40" /></div>}>
+                        {isTables ?
+                            <DatabaseLayout
+                                tables={localTables}
+                                setTables={setLocalTables}
+                                createTable={createTable}
+                            />
+                            :
+                            <div className="rounded-lg flex flex-1 items-center justify-center flex-col gap-3">
+                                <Table className="h-7 w-7 opacity-40" />
+                                <h3 className="text-primary/40 font-medium- text-sm text-center">Your database is empty.<br />Create a table to get started.</h3>
+
+                                <EditTableNamePopover onDone={createTable}>
+                                    <Button className="gap-2 rounded-lg mt-1" size='sm'>
+                                        <Plus className="h-4 w-4" />
+                                        Create table
+                                    </Button>
+                                </EditTableNamePopover>
+                            </div>
+                        }
+                    </Suspense>
                 </div>
+                <DialogFooter className="self-end">
+                    <DialogClose asChild>
+                        <Button variant='destructive' className="rounded-lg">Discard</Button>
+                    </DialogClose>
+
+                    {isTables ? <Button type="submit" onClick={handleSaveChanges} className="rounded-lg">Save changes</Button> : null}
+                </DialogFooter>
             </DialogContent>
         </Dialog>
     )
