@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { useEffect, useMemo, useState } from "react";
-import { TableFieldSettings, TableFieldTypes, TableSchema, TextFieldSettingType } from "@/lib/store/useTableStore";
+import { OptionFieldSettingType, TableFieldSettings, TableFieldTypes, TableSchema, TextFieldSettingType } from "@/lib/store/useTableStore";
 import { TextFieldSetting } from "./field/TextFieldSetting";
 import { CommonFieldSetting } from "./field/CommonFieldSetting";
 import { TooltipProvider } from "../ui/tooltip";
@@ -11,6 +11,7 @@ import { Plus } from "lucide-react";
 import { FieldSelectMenu } from "./EditFieldPopover";
 import { Input } from "../ui/input";
 import { CornerTooltip } from "../common/CornerTooltip";
+import { OptionFieldSetting } from "./field/OptionFieldSetting";
 
 interface TableFieldsProps {
     tableName: string;
@@ -43,17 +44,20 @@ export const TableFields = ({ tableName, schema, updateTable, selectedTableChang
         updateTable({ tableName, schema: updatedSchema })
     }
 
-    const addNewField = (fieldType: TableFieldTypes) => {
+    const addNewField = (fieldType: TableFieldTypes, preSetting?: TableFieldSettings) => {
         updateTable({
             tableName,
             schema: [
                 ...schema,
                 {
                     columnName: 'fieldname',
-                    type: fieldType
+                    type: fieldType,
+                    ...preSetting && { setting: preSetting }
                 }
             ]
         })
+
+        setSelectedFieldIndex(schema.length)
     }
 
     const _onColumnNameChange = (columnName: string) => {
@@ -98,12 +102,12 @@ export const TableFields = ({ tableName, schema, updateTable, selectedTableChang
                     <p className="place-self-center text-xs mt-2 text-muted-foreground mb-6">Add new field</p>
                 </div>
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col overflow-auto">
                 <Label className="ml-4">{tableFieldTypeToNameMapper[selectedField?.type]} settings</Label>
-                <div className="mt-3 grow flex flex-col justify-start flex-wrap gap-6 bg-secondary/40 p-6 rounded-r-lg border border-l-0">
+                <div className="mt-3 grow flex flex-col justify-start gap-6 bg-secondary/40 p-6 rounded-r-lg border border-l-0 overflow-auto">
                     <div className="flex items-center gap-4 text-nowrap relative">
-                        <Label className="text-muted-foreground min-w-[25%]">Field name</Label>
-                        <Input defaultValue={selectedField?.columnName} onBlur={e => _onColumnNameChange(e.target.value)} />
+                        <Label className="text-muted-foreground min-w-[30%]">Field name</Label>
+                        <Input value={selectedField?.columnName ?? ''} onChange={e => _onColumnNameChange(e.target.value)} className="rounded-lg" />
 
                         {/* <CornerTooltip tip="Field name for internal use (No spaces)" /> */}
                     </div>
@@ -116,6 +120,26 @@ export const TableFields = ({ tableName, schema, updateTable, selectedTableChang
                                 onDiscriptionChange={text => setSettingField('description', text)}
                                 onPlaceholderChange={text => setSettingField<TextFieldSettingType>('placeholder', text)}
                                 onRequiredChange={required => setSettingField('required', required)}
+                            />
+                        }
+                        {
+                            selectedField?.type === TableFieldTypes.OPT &&
+                            <OptionFieldSetting
+                                setting={selectedField.setting as OptionFieldSettingType}
+                                onOptionAdd={optionName => setSettingField<OptionFieldSettingType>('options', [
+                                    ...(selectedField.setting as OptionFieldSettingType).options,
+                                    optionName
+                                ])}
+                                onOptionEdit={(index, optionName) => {
+                                    const newOpts = [...(selectedField.setting as OptionFieldSettingType).options];
+                                    newOpts[index] = optionName;
+                                    console.log({ index, optionName })
+                                    setSettingField<OptionFieldSettingType>('options', newOpts);
+                                }}
+                                onOptionDelete={(index) => {
+                                    const newOpts = (selectedField.setting as OptionFieldSettingType).options.filter((_, i) => i !== index);
+                                    setSettingField<OptionFieldSettingType>('options', newOpts);
+                                }}
                             />
                         }
 

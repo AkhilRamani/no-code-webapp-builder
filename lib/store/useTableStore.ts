@@ -9,9 +9,13 @@ export type TextFieldSettingType = CommonFieldSetting & {
     placeholder?: string
 }
 
+export type OptionFieldSettingType = CommonFieldSetting & {
+    options: string[]
+}
+
 export type SwitchFieldSettingType = CommonFieldSetting;
 
-export type TableFieldSettings = TextFieldSettingType | SwitchFieldSettingType;
+export type TableFieldSettings = TextFieldSettingType | SwitchFieldSettingType | OptionFieldSettingType;
 
 export enum TableFieldTypes {
     STR = 'STR',
