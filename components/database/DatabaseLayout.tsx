@@ -73,7 +73,7 @@ const DatabaseLayout = ({ tables, setTables, createTable }: DatabaseLayoutProps)
                                         <DropdownMenuContent className="rounded-lg mt-1">
                                             <DropdownMenuGroup>
                                                 <DropdownMenuItem className="px-3 py-2 rounded-lg" onClick={() => deleteTable(index)}>
-                                                    <span className="ml-2.5 opacity-80">Delete</span>
+                                                    <span className="opacity-80">Delete</span>
                                                 </DropdownMenuItem>
                                             </DropdownMenuGroup>
                                         </DropdownMenuContent>
