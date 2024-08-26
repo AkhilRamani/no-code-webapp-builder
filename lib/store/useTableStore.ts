@@ -65,6 +65,20 @@ const testData: TableStore['tables'] = [
                 columnName: 'Amount',
                 type: TableFieldTypes.NUM
             },
+            {
+                columnName: 'Status',
+                type: TableFieldTypes.OPT,
+                setting: {
+                    required: true,
+                    options: [
+                        'Unhandled',
+                        'Packed',
+                        'Processed',
+                        'Shipped',
+                        'Fulfilled'
+                    ]
+                }
+            },
         ]
     },
     {

@@ -54,11 +54,11 @@ export const SidebarMenuDialog = ({ data, open, onOpenChange, onSubmit, onDelete
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="!rounded-xl">
-                <DialogHeader>
+                <DialogHeader >
                     <DialogTitle>Edit menu</DialogTitle>
                     <DialogDescription>A menu item will appear on sidebar menus list</DialogDescription>
                 </DialogHeader>
-                <div className="flex gap-4  ">
+                <div className="flex gap-4 py-2">
                     <Popover modal open={iconPickerOpen} onOpenChange={setIconPickerOpen}>
                         <PopoverTrigger asChild>
                             <Button variant='outline'>

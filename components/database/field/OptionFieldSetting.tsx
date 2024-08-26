@@ -26,7 +26,7 @@ export const OptionFieldSetting = ({ setting, onOptionAdd, onOptionEdit, onOptio
                                     tagName="p"
                                     className='py-2 px-4 flex-1 rounded-lg outline-black text-slate-800 text-[0.82rem]'
                                 />
-                                <Button variant='ghost' onClick={() => onOptionDelete(index)} className="invisible absolute right-0 rounded-md h-7 w-7 p-0 mt-1 mr-1 hover:bg-red-200">
+                                <Button variant='ghost' onClick={() => onOptionDelete(index)} className="invisible absolute right-0 rounded-md h-7 w-7 p-0 mt-1 mr-1 hover:bg-destructive hover:text-white">
                                     <Trash2 className="w-3 h-3" />
                                 </Button>
                             </div>
