@@ -94,8 +94,8 @@ const testData: TableStore['tables'] = [
 ]
 
 export const useTableStore = create<TableStore>((set) => ({
-    // tables: [...testData],
-    tables: [],
+    tables: [...testData],
+    // tables: [],
     createTable: (tableName, schema) => {
         set(state => ({
             tables: [
