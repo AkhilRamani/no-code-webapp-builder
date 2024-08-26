@@ -8,7 +8,7 @@ import { CommonFieldSetting } from "./field/CommonFieldSetting";
 import { TooltipProvider } from "../ui/tooltip";
 import { TableFieldIcon, tableFieldTypeToNameMapper } from "@/lib/helpers/tableFieldHelpers";
 import { Plus } from "lucide-react";
-import { FieldSelectMenu } from "./EditFieldPopover";
+import { FieldSelectMenu } from "./FieldSelectMenu";
 import { Input } from "../ui/input";
 import { CornerTooltip } from "../common/CornerTooltip";
 import { OptionFieldSetting } from "./field/OptionFieldSetting";

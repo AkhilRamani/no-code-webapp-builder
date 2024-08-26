@@ -3,9 +3,10 @@ import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { TableFields } from "./TableFieldsLayout";
 import { EllipsisVertical, Plus } from "lucide-react";
-import { Dispatch, SetStateAction, useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { TableSchema } from "@/lib/store/useTableStore";
 import { EditTableNamePopover } from "./TableEditPopover";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "../ui/dropdown-menu";
 
 interface DatabaseLayoutProps {
     tables: TableSchema[]
@@ -30,7 +31,14 @@ const DatabaseLayout = ({ tables, setTables, createTable }: DatabaseLayoutProps)
         });
     }
 
-    const selectedTable = useMemo(() => tables[selectedTableIndex], [selectedTableIndex, tables])
+    const deleteTable = (tableIndex: number) => {
+        setTables(prevTables => {
+            const newTables = prevTables.filter((_, i) => i !== tableIndex)
+            return newTables;
+        });
+    }
+
+    const selectedTable = useMemo(() => tables[selectedTableIndex] ?? setSelectedTableIndex(tables.length - 1), [selectedTableIndex, tables])
 
     return (
         <div className="flex gap-4 flex-1">
@@ -57,21 +65,23 @@ const DatabaseLayout = ({ tables, setTables, createTable }: DatabaseLayoutProps)
                                 className={clsx("h-10 justify-between rounded-lg tracking-wide hover:bg-transparent", active ? "!bg-white  outline outline-0 shadow-md " : "text-muted-foreground/65")}
                             >
                                 {table.tableName}
-                                {active && <EllipsisVertical className="h-4 w-4" />}
+                                {active &&
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                            <EllipsisVertical className="h-4 w-4" />
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent className="rounded-lg mt-1">
+                                            <DropdownMenuGroup>
+                                                <DropdownMenuItem className="px-3 py-2 rounded-lg" onClick={() => deleteTable(index)}>
+                                                    <span className="ml-2.5 opacity-80">Delete</span>
+                                                </DropdownMenuItem>
+                                            </DropdownMenuGroup>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                }
                             </Button>
                         )
                     })}
-
-                    {/* <Button variant='ghost' size='sm' className="gap-2 rounded-lg hover:bg-muted-foreground/10 mt-2 border">
-                            <Plus className="h-4 w-4" />
-                            Create table
-                        </Button> */}
-                    {/* <EditTableNamePopover onDone={createTable}>
-                        <Button size='icon' className="rounded-full shrink-0 h-8 w-8 place-self-center mt-6 shadow-lg" >
-                            <Plus className="h-4 w-4" />
-                        </Button>
-                    </EditTableNamePopover>
-                    <p className="place-self-center text-xs text-muted-foreground mb-6">Create table</p> */}
                 </div>
             </div>
 
