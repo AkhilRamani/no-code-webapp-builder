@@ -28,7 +28,7 @@ export enum TableFieldTypes {
 
 export interface TableSchema {
     tableName: string;
-    schema: {
+    fields: {
         columnName: string;
         type: TableFieldTypes,
         setting?: TableFieldSettings
@@ -38,14 +38,14 @@ export interface TableSchema {
 export interface TableStore {
     tables: TableSchema[];
 
-    createTable: (tableName: string, schema: TableSchema['schema']) => void;
+    createTable: (tableName: string, schema: TableSchema['fields']) => void;
     updateTables: (tables: TableSchema[]) => void
 }
 
 const testData: TableStore['tables'] = [
     {
         tableName: 'Orders',
-        schema: [
+        fields: [
             {
                 columnName: 'Name',
                 type: TableFieldTypes.STR,
@@ -83,7 +83,7 @@ const testData: TableStore['tables'] = [
     },
     {
         tableName: 'Products',
-        schema: [
+        fields: [
             {
                 columnName: 'Name',
                 type: TableFieldTypes.STR
@@ -108,15 +108,15 @@ const testData: TableStore['tables'] = [
 ]
 
 export const useTableStore = create<TableStore>((set) => ({
-    tables: [...testData],
-    // tables: [],
+    // tables: [...testData],
+    tables: [],
     createTable: (tableName, schema) => {
         set(state => ({
             tables: [
                 ...state.tables,
                 {
                     tableName,
-                    schema
+                    fields: schema
                 }
             ]
         }))

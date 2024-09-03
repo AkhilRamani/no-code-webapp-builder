@@ -64,7 +64,7 @@ export const UserTableDynamic = ({ dataSource }: UserTableProps) => {
                             <TableHead className="text-right">Amount</TableHead>
                         </>}
                         {
-                            table?.schema.map((column, index) => (
+                            table?.fields.map((column, index) => (
                                 <TableHead key={`${column.columnName}-${index}`}>{column.columnName}</TableHead>
                             ))
                         }

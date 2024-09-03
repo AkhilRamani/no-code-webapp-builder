@@ -15,7 +15,7 @@ import { OptionFieldSetting } from "./field/OptionFieldSetting";
 
 interface TableFieldsProps {
     tableName: string;
-    schema: TableSchema['schema'];
+    schema: TableSchema['fields'];
     updateTable: (updatedTable: TableSchema) => void;
     selectedTableChange: boolean;   // used to reset selected field to 0
 }
@@ -41,13 +41,13 @@ export const TableFields = ({ tableName, schema, updateTable, selectedTableChang
         const updatedSchema = [...schema];
         updatedSchema[selectedFieldIndex] = updatedField;
 
-        updateTable({ tableName, schema: updatedSchema })
+        updateTable({ tableName, fields: updatedSchema })
     }
 
     const addNewField = (fieldType: TableFieldTypes, preSetting?: TableFieldSettings) => {
         updateTable({
             tableName,
-            schema: [
+            fields: [
                 ...schema,
                 {
                     columnName: 'fieldname',
@@ -69,7 +69,7 @@ export const TableFields = ({ tableName, schema, updateTable, selectedTableChang
         const updatedSchema = [...schema];
         updatedSchema[selectedFieldIndex] = updatedField;
 
-        updateTable({ tableName, schema: updatedSchema })
+        updateTable({ tableName, fields: updatedSchema })
     }
 
     return (

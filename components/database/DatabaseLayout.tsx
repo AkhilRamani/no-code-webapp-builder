@@ -88,7 +88,7 @@ const DatabaseLayout = ({ tables, setTables, createTable }: DatabaseLayoutProps)
             <div className="grid grid-cols-[38%_auto] flex-1">
                 {selectedTable && <TableFields
                     tableName={selectedTable.tableName}
-                    schema={selectedTable.schema}
+                    schema={selectedTable.fields}
                     updateTable={updateSelectedTable}
                     selectedTableChange={!!selectedTableIndex}
                 />}
