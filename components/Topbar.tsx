@@ -9,7 +9,7 @@ import copy from "copy-to-clipboard";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { Input } from "./ui/input";
 import clsx from "clsx";
-import { Database, DatabaseZap, MonitorPlay, Play } from "lucide-react";
+import { Play } from "lucide-react";
 import { Toggle } from "./ui/toggle";
 import { DatabaseDialog } from "./database/DatabaseDialog";
 
