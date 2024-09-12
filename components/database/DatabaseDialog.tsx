@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Database, Loader2, LoaderPinwheel, Plus, Table } from "lucide-react"
+import { Database, Loader2, Plus, Table } from "lucide-react"
 import React, { lazy, Suspense, useEffect, useState } from "react"
 import { TableSchema, useTableStore } from "@/lib/store/useTableStore"
 import { EditTableNamePopover } from "./TableEditPopover"
+import { useToggle } from "@/lib/hooks/useToggle.hook.ts"
+import clsx from "clsx"
 
 const DatabaseLayout = lazy(() => import("./DatabaseLayout.tsx"));
 
@@ -11,16 +13,19 @@ export const DatabaseDialog = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const { tables, updateTables } = useTableStore()
-    // const [localTables, setLocalTables] = useState(tables)
     const [localTables, setLocalTables] = useState<TableSchema[]>([])
+    const [isSaving, toggleIsSaving] = useToggle(false);
 
     useEffect(() => {
-        return setLocalTables(tables)
+        setLocalTables([...tables])
     }, [tables])
 
-    const handleSaveChanges = () => {
-        updateTables(localTables)
-        // Close the dialog here
+    const handleSaveChanges = async () => {
+        toggleIsSaving();
+
+        await updateTables(localTables)
+
+        toggleIsSaving();
         setIsOpen(false);
     }
 
@@ -83,10 +88,20 @@ export const DatabaseDialog = () => {
                 </div>
                 <DialogFooter className="self-end">
                     <DialogClose asChild>
-                        <Button variant='destructive' className="rounded-lg">Discard</Button>
+                        <Button variant='destructive' className="rounded-lg" disabled={isSaving}>Discard</Button>
                     </DialogClose>
 
-                    {isTables ? <Button type="submit" onClick={handleSaveChanges} className="rounded-lg">Save changes</Button> : null}
+                    {isTables || tables.length ? (
+                        <Button
+                            type="submit"
+                            onClick={handleSaveChanges}
+                            className="rounded-lg relative"
+                            disabled={isSaving}
+                        >
+                            <span className={clsx(isSaving && 'invisible')}>Save changes</span>
+                            {isSaving && <Loader2 className="absolute h-5 w-5 animate-spin" />}
+                        </Button>
+                    ) : null}
                 </DialogFooter>
             </DialogContent>
         </Dialog>

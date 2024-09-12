@@ -1,5 +1,5 @@
 // lib/mongodb.ts
-import { Collection, MongoClient, ServerApiVersion } from "mongodb";
+import { Collection, Db, MongoClient, ServerApiVersion } from "mongodb";
 
 if (!process.env.MONGODB_URI) {
     throw new Error('Invalid/Missing environment variable: "MONGODB_URI"')
@@ -39,9 +39,22 @@ if (process.env.NODE_ENV === 'development') {
 // separate module, the client can be shared across functions.
 export default clientPromise
 
-export async function getDbCollection(collectionName: string): Promise<Collection> {
+async function getAppDb(): Promise<Db> {
     const client = await clientPromise;
-    const db = client.db();
+    return client.db('portals_app');
+}
 
-    return db.collection(collectionName)
+export async function getAppDbCollection(collectionName: string): Promise<Collection> {
+    const db = await getAppDb();
+    return db.collection(collectionName);
+}
+
+export async function getTenantDb(): Promise<Db> {
+    const client = await clientPromise;
+    return client.db('portals_tenant');
+}
+
+export async function getTenantDbCollection(collectionName: string): Promise<Collection> {
+    const db = await getTenantDb();
+    return db.collection(collectionName);
 }

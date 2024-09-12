@@ -1,4 +1,7 @@
 import { create } from 'zustand'
+import { createTableApi, deleteTablesApi, updateTablesApi } from '../apis/tableApis';
+import { TableModal } from '@/types/db/table.types';
+import { toast } from 'sonner';
 
 export type CommonFieldSetting = {
     description?: string;
@@ -27,6 +30,7 @@ export enum TableFieldTypes {
 }
 
 export interface TableSchema {
+    id?: string;
     tableName: string;
     fields: {
         columnName: string;
@@ -39,11 +43,12 @@ export interface TableStore {
     tables: TableSchema[];
 
     createTable: (tableName: string, schema: TableSchema['fields']) => void;
-    updateTables: (tables: TableSchema[]) => void
+    updateTables: (tables: TableSchema[]) => Promise<void>
 }
 
 const testData: TableStore['tables'] = [
     {
+        id: '1',
         tableName: 'Orders',
         fields: [
             {
@@ -82,6 +87,7 @@ const testData: TableStore['tables'] = [
         ]
     },
     {
+        id: '2',
         tableName: 'Products',
         fields: [
             {
@@ -107,23 +113,91 @@ const testData: TableStore['tables'] = [
     }
 ]
 
-export const useTableStore = create<TableStore>((set) => ({
+export const useTableStore = create<TableStore>((set, get) => ({
     // tables: [...testData],
     tables: [],
-    createTable: (tableName, schema) => {
+    createTable: async (tableName, fields) => {
+        const projectId = '66d65fd3def943cfc739e2d1'
+        const { id } = await createTableApi(projectId, tableName, fields)
+
         set(state => ({
-            tables: [
-                ...state.tables,
-                {
-                    tableName,
-                    fields: schema
-                }
-            ]
+            tables: [...state.tables, {
+                id,
+                tableName,
+                fields
+            }]
         }))
     },
-    updateTables: (tables: TableSchema[]) => {
-        set(() => ({
-            tables
-        }))
+    updateTables: async (tables: TableSchema[]) => {
+        const projectId = '66d65fd3def943cfc739e2d1'; // Assuming this is the same project ID used in createTable
+        const existingTables = get().tables;
+
+        const tablesToCreate: (Omit<TableModal, 'id' | 'createdAt' | 'updatedAt'> & { trackingId: string })[] = [];
+        const tablesToUpdate: Omit<TableModal, 'createdAt' | 'updatedAt'>[] = [];
+        const tablesToDelete: string[] = [];
+
+        const existingTableMap = new Map(existingTables.map(table => [table.id, table]));
+        const newTableIds = new Set(tables.map(table => table.id));
+
+        // Compare and categorize tables
+        tables.forEach((table, index) => {
+            const existingTable = existingTableMap.get(table.id);
+            if (!existingTable) {
+                tablesToCreate.push({
+                    projectId,
+                    name: table.tableName,
+                    fields: table.fields,
+                    trackingId: `t-${index}`    // (depends on index of tables array) trackingId is used to match the response of created tables to update the table with the correct id
+                });
+            } else if (JSON.stringify(existingTable) !== JSON.stringify(table)) {
+                tablesToUpdate.push({
+                    id: table.id as string,
+                    projectId,
+                    name: table.tableName,
+                    fields: table.fields
+                });
+            }
+        });
+
+        // Identify deleted tables
+        existingTables.forEach(table => {
+            if (!newTableIds.has(table.id)) {
+                tablesToDelete.push(table.id as string);
+            }
+        });
+
+        try {
+            const createPromises = tablesToCreate.map(table =>
+                createTableApi(projectId, table.name, table.fields, table.trackingId)
+            );
+
+            const [createdResponse] = await Promise.all([
+                Promise.all(createPromises),
+                tablesToUpdate.length && updateTablesApi(tablesToUpdate),
+                tablesToDelete.length && deleteTablesApi(projectId, tablesToDelete)
+            ]);
+
+            // Update tables with new IDs
+            const createdTables = tables.reduce((acc, table, index) => {
+                if (!table.id) {
+                    const createdTable = createdResponse.find(ct => ct.trackingId === `t-${index}`);
+                    acc.push(createdTable ? { ...table, id: createdTable.id } : table);
+                } else {
+                    acc.push(table);
+                }
+                return acc;
+            }, [] as typeof tables);
+
+            set({
+                tables: [
+                    ...tables.slice(0, -createdTables.length),
+                    ...createdTables
+                ]
+            });
+        } catch (error) {
+            console.error('Error updating tables:', error);
+            toast.error('Error updating tables, please try again.');
+            throw error; // Re-throw to allow caller to handle
+        }
     }
 }))
