@@ -1,22 +1,14 @@
 import { Frame, useEditor, Element } from "@craftjs/core";
 import { UserCanvas } from "./user/Canvas";
-import { UserSidebar } from "./user/Sidebar/Sidebar";
 import clsx from "clsx";
 
 export const EditorCanvas = () => {
-    const {
-        enabled,
-        connectors,
-        actions: { setOptions },
-    } = useEditor((state) => ({
+    const { enabled, connectors, actions: { setOptions } } = useEditor((state) => ({
         enabled: state.options.enabled,
     }));
 
     // useEffect(() => {
-    //     if (!window) {
-    //         return;
-    //     }
-
+    //     if (!window) return;
     //     window.requestAnimationFrame(() => {
     //         // Notify doc site
     //         window.parent.postMessage(
@@ -25,7 +17,6 @@ export const EditorCanvas = () => {
     //             },
     //             '*'
     //         );
-
     //         setTimeout(() => {
     //             setOptions((options) => {
     //                 options.enabled = true;
@@ -42,7 +33,7 @@ export const EditorCanvas = () => {
                 <div className={clsx("flex w-full m-auto bg-white shadow-xl rounded-md border overflow-auto", 'ease-in-out', enabled ? 'h-[570px] max-w-[1000px] duration-500' : 'max-w-[90%] h-[90%] duration-1000 delay-100')}>
                     <Frame>
                         <Element is={UserCanvas} canvas>
-                            {/* <UserSidebar /> */}
+
                         </Element>
                     </Frame>
                 </div>
