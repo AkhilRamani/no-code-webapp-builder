@@ -14,19 +14,18 @@ import { OptionFieldSetting } from "./field/OptionFieldSetting";
 
 interface TableFieldsProps {
     tableData: TableSchema;
-    fields: TableSchema['fields'];      // FIXME: can remove this prop
     updateTable: (updatedTable: TableSchema) => void;
     selectedTableChange: boolean;   // used to reset selected field to 0
 }
 
-export const TableFields = ({ fields, updateTable, selectedTableChange, tableData }: TableFieldsProps) => {
+export const TableFields = ({ updateTable, selectedTableChange, tableData }: TableFieldsProps) => {
     const [selectedFieldIndex, setSelectedFieldIndex] = useState(0)
 
     useEffect(() => {
         setSelectedFieldIndex(0)
     }, [selectedTableChange])
 
-    const selectedField = useMemo(() => fields[selectedFieldIndex] ?? [], [selectedFieldIndex, fields])
+    const selectedField = useMemo(() => tableData.fields[selectedFieldIndex] ?? [], [selectedFieldIndex, tableData.fields])
 
     const setSettingField = <T extends TableFieldSettings>(property: keyof T, value: unknown) => {
         const updatedField = {
@@ -37,7 +36,7 @@ export const TableFields = ({ fields, updateTable, selectedTableChange, tableDat
             }
         }
 
-        const updatedFields = [...fields];
+        const updatedFields = [...tableData.fields];
         updatedFields[selectedFieldIndex] = updatedField;
 
         updateTable({ ...tableData, fields: updatedFields })
@@ -47,7 +46,7 @@ export const TableFields = ({ fields, updateTable, selectedTableChange, tableDat
         updateTable({
             ...tableData,
             fields: [
-                ...fields,
+                ...tableData.fields,
                 {
                     columnName: 'fieldname',
                     type: fieldType,
@@ -56,7 +55,7 @@ export const TableFields = ({ fields, updateTable, selectedTableChange, tableDat
             ]
         })
 
-        setSelectedFieldIndex(fields.length)
+        setSelectedFieldIndex(tableData.fields.length)
     }
 
     const _onColumnNameChange = (columnName: string) => {
@@ -65,7 +64,7 @@ export const TableFields = ({ fields, updateTable, selectedTableChange, tableDat
             columnName
         }
 
-        const updatedFields = [...fields];
+        const updatedFields = [...tableData.fields];
         updatedFields[selectedFieldIndex] = updatedField;
 
         updateTable({ ...tableData, fields: updatedFields })
@@ -77,7 +76,7 @@ export const TableFields = ({ fields, updateTable, selectedTableChange, tableDat
                 <Label className="ml-4">{tableData.tableName} fields</Label>
                 <div className="mt-3 flex grow flex-col bg-secondary/60 rounded-l-lg border overflow-auto border-r">
 
-                    {fields.map((field, index) => {
+                    {tableData.fields.map((field, index) => {
                         const active = index === selectedFieldIndex
                         return (
                             <Button
@@ -111,7 +110,7 @@ export const TableFields = ({ fields, updateTable, selectedTableChange, tableDat
                         {/* <CornerTooltip tip="Field name for internal use (No spaces)" /> */}
                     </div>
 
-                    {(fields && fields.length) ? <TooltipProvider>
+                    {(tableData.fields && tableData.fields.length) ? <TooltipProvider>
                         {
                             selectedField?.type === TableFieldTypes.STR &&
                             <TextFieldSetting
