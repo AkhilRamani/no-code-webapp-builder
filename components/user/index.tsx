@@ -5,6 +5,7 @@ import { UserCard, UserCardTitle, UserCardDescription, UserCardContainer, UserCa
 import { UserContainer } from "./container/Container";
 import { UserHeader } from "./Header";
 import { UserSidebar } from "./Sidebar/Sidebar";
+import { AddEntryForm } from "./table/AddEntryForm";
 import { UserTable } from "./table/UserTable";
 import { UserTableDynamic } from "./table/UserTableDynamic";
 import { UserText } from "./Text/Text";
@@ -26,5 +27,6 @@ export const userComponents = {
   UserTable,
   UserAvatar,
   UserNumberCard,
-  UserTableDynamic
+  UserTableDynamic,
+  AddEntryForm
 };

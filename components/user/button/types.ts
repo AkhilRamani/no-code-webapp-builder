@@ -5,5 +5,6 @@ export type UserButtonProps = {
     varient?: UserButtonVarientSettingProps['selected'] | null,
     size?: UserButtonSizeSettingProps['selected'],
     label?: string,
-    icon?: string
+    icon?: string,
+    onClick?: () => void
 }

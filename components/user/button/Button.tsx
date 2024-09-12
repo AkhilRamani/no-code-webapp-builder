@@ -6,7 +6,7 @@ import { UserButtonProps } from "./types";
 import { IconsLucide } from "@/components/common/IconsLucide";
 import clsx from "clsx";
 
-export const UserButton = ({ label, icon, varient, size }: UserButtonProps) => {
+export const UserButton = ({ label, icon, varient, size, onClick }: UserButtonProps) => {
   const { connectors: { connect, drag } } = useNode();
 
   return (
@@ -14,6 +14,7 @@ export const UserButton = ({ label, icon, varient, size }: UserButtonProps) => {
       ref={(ref) => connect(drag(ref))}
       variant={varient}
       size={size}
+      onClick={onClick}
       className={clsx('gap-3')}
     >
       {icon && <IconsLucide name={icon} className="h-4 w-4" />}

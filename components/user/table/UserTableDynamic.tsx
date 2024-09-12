@@ -7,12 +7,16 @@ import { Loader2, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { UserButton } from "../button/Button";
 import { getTableData } from "@/lib/apis/getTableData";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Form } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
 
 import { format } from 'date-fns';
 import { UserTableSettings } from "./UserTableSettings";
 import { UserTableProps } from "./types";
 import { useTableStore } from "@/lib/store/useTableStore";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { AddEntryForm } from "./AddEntryForm";
 
 const formatTimestamp = (timestamp: number) => {
     return format(new Date(timestamp), 'dd MMM yyyy');
@@ -27,6 +31,14 @@ export const UserTableDynamic = ({ dataSource }: UserTableProps) => {
 
     const { tables } = useTableStore();
     const table = useMemo(() => tables.find((table) => table.tableName === dataSource), [dataSource, tables])
+
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        // Handle form submission logic here
+        setIsDialogOpen(false);
+    };
 
     return (
         <div ref={(ref) => connect(drag(ref))} className="w-full">
@@ -49,7 +61,22 @@ export const UserTableDynamic = ({ dataSource }: UserTableProps) => {
                         />
                     </div>
 
-                    <Element id='table-add-btn' is={UserButton} size="default" icon="NotebookPen" label="Add" />
+                    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                        <DialogTrigger asChild>
+                            <Element id='table-add-btn' is={UserButton} size="sm" icon="NotebookPen" label="Add" />
+                        </DialogTrigger>
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle>Add New Entry</DialogTitle>
+                            </DialogHeader>
+                            <Element
+                                id="add-entry-form"
+                                is={AddEntryForm}
+                                fields={table?.fields || []}
+                                onSubmit={handleSubmit}
+                            />
+                        </DialogContent>
+                    </Dialog>
                 </div>
             </div>
             <Table className="">
@@ -104,6 +131,24 @@ export const UserTableDynamic = ({ dataSource }: UserTableProps) => {
         </div>
     )
 }
+
+const FormField = ({ label, name, type }) => {
+    return (
+        <div className="mb-4">
+            <label htmlFor={name} className="block text-sm font-medium text-gray-700">{label}</label>
+            <Input type={type} id={name} name={name} className="mt-1" />
+        </div>
+    );
+};
+
+FormField.craft = {
+    displayName: 'Form Field',
+    props: {
+        label: '',
+        name: '',
+        type: 'text',
+    },
+};
 
 UserTableDynamic.craft = {
     displayName: 'Table D',
