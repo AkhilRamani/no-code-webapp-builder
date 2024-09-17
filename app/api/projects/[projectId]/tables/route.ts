@@ -2,6 +2,24 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 import { updateTablesController } from '@/lib/server/controllers/table/updateTables.controller';
 import { deleteTablesController } from '@/lib/server/controllers/table/deleteTables.controller';
+import { getTablesController } from '@/lib/server/controllers/table/getTables.controller';
+
+export async function GET(request: NextRequest, { params }: { params: { projectId: string } }) {
+    try {
+        const { projectId } = params;
+
+        if (!ObjectId.isValid(projectId)) {
+            return NextResponse.json({ error: 'Invalid or missing projectId' }, { status: 400 });
+        }
+
+        const tables = await getTablesController(projectId);
+        return NextResponse.json({ tables });
+
+    } catch (error) {
+        console.error('Error fetching tables:', error);
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    }
+}
 
 export async function PATCH(request: NextRequest) {
     try {
@@ -30,9 +48,10 @@ export async function PATCH(request: NextRequest) {
     }
 }
 
-export async function DELETE(request: NextRequest) {
+export async function DELETE(request: NextRequest, { params }: { params: { projectId: string } }) {
     try {
-        const { tableIds, projectId } = await request.json();
+        const { projectId } = params;
+        const { tableIds } = await request.json();
 
         if (!ObjectId.isValid(projectId)) {
             return NextResponse.json({ error: 'Invalid or missing projectId' }, { status: 400 });

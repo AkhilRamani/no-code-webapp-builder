@@ -11,7 +11,10 @@ interface DataSourceSettingProps {
 export const DataSourceSetting = ({ selected, onChange }: DataSourceSettingProps) => {
     const { tables } = useTableStore()
 
-    const options = useMemo(() => tables.map(table => table.tableName), [tables])
+    const options = useMemo(() => tables.map(table => ({
+        tableId: table.id,
+        tableName: table.tableName
+    })), [tables])
 
     return (
         <div className="space-y-2 border-b pb-6">
@@ -28,9 +31,10 @@ export const DataSourceSetting = ({ selected, onChange }: DataSourceSettingProps
                             <SelectItem value='Dummy' className="font-semibold italic text-muted-foreground">
                                 Dummy
                             </SelectItem>
-                            {options.map((sourceName, index) => (
-                                <SelectItem key={`${sourceName}-${index}`} value={sourceName} className="font-semibold text-muted-foreground">
-                                    {sourceName}
+                            {options.map((source, index) => (
+                                // assuming table id will be updated when creating a new table from server response
+                                <SelectItem key={`${source.tableName}-${index}`} value={source.tableId as string} className="font-semibold text-muted-foreground">
+                                    {source.tableName}
                                 </SelectItem>
                             ))}
                         </SelectContent>

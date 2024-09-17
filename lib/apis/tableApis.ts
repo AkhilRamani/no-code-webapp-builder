@@ -12,11 +12,11 @@ export const createTableApi = async (
     trackingId?: string;
 }> => {
     try {
-        const response = await fetch('/api/tables/create', {
+        const response = await fetch(`/api/projects/${projectId}/tables/create`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                projectId,
+                projectId,  // FIXME: remove this
                 name: tableName,
                 fields,
                 trackingId
@@ -56,10 +56,10 @@ export const updateTablesApi = async (tables: Omit<TableModal, 'createdAt' | 'up
 
 export const deleteTablesApi = async (projectId: string, tableIds: string[]): Promise<void> => {
     try {
-        const response = await fetch('/api/tables', {
+        const response = await fetch(`/api/projects/${projectId}/tables`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ projectId, tableIds })
+            body: JSON.stringify({ tableIds })
         });
 
         if (!response.ok) {
@@ -68,6 +68,17 @@ export const deleteTablesApi = async (projectId: string, tableIds: string[]): Pr
         }
     } catch (error) {
         console.error('Error deleting tables:', error);
+        throw error;
+    }
+}
+
+export const getTablesApi = async (projectId: string): Promise<TableModal[]> => {
+    try {
+        const response = await fetch(`/api/projects/${projectId}/tables`);
+        const data = await response.json();
+        return data.tables as TableModal[];
+    } catch (error) {
+        console.error('Error getting tables:', error);
         throw error;
     }
 }

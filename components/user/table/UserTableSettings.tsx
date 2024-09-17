@@ -12,7 +12,7 @@ export const UserTableSettings = () => {
 
     return (
         <div className="px-4 pt-6 grid gap-6">
-            <DataSourceSetting selected={dataSource} onChange={tableName => setProp((props: UserTableProps) => props.dataSource = tableName)} />
+            <DataSourceSetting selected={dataSource} onChange={tableId => setProp((props: UserTableProps) => props.dataSource = tableId)} />
         </div>
     )
 }

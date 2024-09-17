@@ -2,21 +2,18 @@ import { useNode, Element } from "@craftjs/core";
 import { Badge } from "@/components/ui/badge"
 import { CardDescription, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { format } from 'date-fns';
 import { UserText } from "../Text/Text";
 import { Loader2, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { UserButton } from "../button/Button";
-import { getTableData } from "@/lib/apis/getTableData";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Form } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-
-import { format } from 'date-fns';
+import { getTableData_DUMMY } from "@/lib/apis/getTableData_DUMMY";
 import { UserTableSettings } from "./UserTableSettings";
 import { UserTableProps } from "./types";
 import { useTableStore } from "@/lib/store/useTableStore";
-import { useMemo, useState } from "react";
-import { AddEntryForm } from "./AddEntryForm";
+import { useEffect, useMemo } from "react";
+import { useTableDataStore } from "@/lib/store/useTableDataStore";
+import { TableFormDialog } from "./formDialog/tableFormDialog";
 
 const formatTimestamp = (timestamp: number) => {
     return format(new Date(timestamp), 'dd MMM yyyy');
@@ -27,18 +24,22 @@ export const UserTableDynamic = ({ dataSource }: UserTableProps) => {
         connectors: { connect, drag },
     } = useNode();
 
-    const { data, loading } = getTableData()
+    const { data } = getTableData_DUMMY()
 
     const { tables } = useTableStore();
-    const table = useMemo(() => tables.find((table) => table.tableName === dataSource), [dataSource, tables])
+    const table = useMemo(() => tables.find((table) => table.id === dataSource), [dataSource, tables])
 
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const tableData = useTableDataStore(state => state.tableData[dataSource]);
+    const loading = useTableDataStore(state => state.loading);
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        // Handle form submission logic here
-        setIsDialogOpen(false);
-    };
+    const initTableData = useTableDataStore(state => state.initTableData);
+
+    useEffect(() => {
+        if (table) {
+            console.log({ dataSource, table })
+            initTableData(dataSource, table.tableName);
+        }
+    }, [table]);
 
     return (
         <div ref={(ref) => connect(drag(ref))} className="w-full">
@@ -61,22 +62,12 @@ export const UserTableDynamic = ({ dataSource }: UserTableProps) => {
                         />
                     </div>
 
-                    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                        <DialogTrigger asChild>
-                            <Element id='table-add-btn' is={UserButton} size="sm" icon="NotebookPen" label="Add" />
-                        </DialogTrigger>
-                        <DialogContent>
-                            <DialogHeader>
-                                <DialogTitle>Add New Entry</DialogTitle>
-                            </DialogHeader>
-                            <Element
-                                id="add-entry-form"
-                                is={AddEntryForm}
-                                fields={table?.fields || []}
-                                onSubmit={handleSubmit}
-                            />
-                        </DialogContent>
-                    </Dialog>
+                    <TableFormDialog
+                        title={`Add to ${table?.tableName}`}
+                        fields={table?.fields || []}
+                    >
+                        <Element id='table-add-btn' is={UserButton} size="sm" icon="NotebookPen" label="Add" />
+                    </TableFormDialog>
                 </div>
             </div>
             <Table className="">
@@ -99,15 +90,8 @@ export const UserTableDynamic = ({ dataSource }: UserTableProps) => {
                 </TableHeader>
                 <TableBody>
                     {
-                        loading ?
-
-                            <TableRow>
-                                <TableCell colSpan={6}>
-                                    <Loader2 className="animate-spin ease-in-out m-auto" />
-                                </TableCell>
-                            </TableRow>
-
-                            : dataSource === 'Dummy' && data?.map((row, index) => (
+                        dataSource === 'Dummy' ?
+                            data?.map((row, index) => (
                                 <TableRow key={`${index}-tr`} className="text-nowrap">
                                     <TableCell className="font-medium">{row.name}</TableCell>
                                     <TableCell className="text-muted-foreground">
@@ -125,30 +109,31 @@ export const UserTableDynamic = ({ dataSource }: UserTableProps) => {
                                     <TableCell className="text-right">${row.amount}</TableCell>
                                 </TableRow>
                             ))
+                            :
+                            loading ?
+
+                                <TableRow>
+                                    <TableCell colSpan={6}>
+                                        <Loader2 className="animate-spin ease-in-out m-auto" />
+                                    </TableCell>
+                                </TableRow>
+
+                                :
+                                tableData?.data.map((row, index) => (
+                                    <TableRow key={`${index}-tr`} className="text-nowrap">
+                                        {row.data.map((field: string, cellIndex: number) => (
+                                            <TableCell key={`${index}-${cellIndex}-td`}>
+                                                {field}
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                ))
                     }
                 </TableBody>
             </Table>
         </div>
     )
 }
-
-const FormField = ({ label, name, type }) => {
-    return (
-        <div className="mb-4">
-            <label htmlFor={name} className="block text-sm font-medium text-gray-700">{label}</label>
-            <Input type={type} id={name} name={name} className="mt-1" />
-        </div>
-    );
-};
-
-FormField.craft = {
-    displayName: 'Form Field',
-    props: {
-        label: '',
-        name: '',
-        type: 'text',
-    },
-};
 
 UserTableDynamic.craft = {
     displayName: 'Table D',

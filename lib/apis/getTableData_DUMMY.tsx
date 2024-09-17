@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const getTableData = () => {
+export const getTableData_DUMMY = () => {
     const tableData = [
         {
             name: "Liam Johnson",

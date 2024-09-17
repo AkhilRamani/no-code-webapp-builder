@@ -9,12 +9,20 @@ import clsx from "clsx"
 
 const DatabaseLayout = lazy(() => import("./DatabaseLayout.tsx"));
 
+const loader = <div className="h-full flex flex-1 justify-center"><Loader2 className="m-auto animate-spin h-10 w-10 opacity-40" /></div>
+
 export const DatabaseDialog = () => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const { tables, updateTables } = useTableStore()
+    const { tables, updateTables, fetchTables, fetched } = useTableStore(({ tables, updateTables, fetchTables, fetched }) => ({ tables, updateTables, fetchTables, fetched }))
     const [localTables, setLocalTables] = useState<TableSchema[]>([])
     const [isSaving, toggleIsSaving] = useToggle(false);
+
+    useEffect(() => {
+        if (!fetched) {
+            fetchTables()
+        }
+    }, [])
 
     useEffect(() => {
         setLocalTables([...tables])
@@ -64,8 +72,8 @@ export const DatabaseDialog = () => {
                 </DialogHeader>
                 <div className="grow pt-6 pb-2 flex overflow-auto">
                     {/* <DatabaseLayout tables={localTables} setTables={setLocalTables} /> */}
-                    <Suspense fallback={<div className="h-full flex flex-1 justify-center"><Loader2 className="m-auto animate-spin h-10 w-10 opacity-40" /></div>}>
-                        {isTables ?
+                    <Suspense fallback={loader}>
+                        {fetched ? (isTables ?
                             <DatabaseLayout
                                 tables={localTables}
                                 setTables={setLocalTables}
@@ -82,7 +90,9 @@ export const DatabaseDialog = () => {
                                         Create table
                                     </Button>
                                 </EditTableNamePopover>
-                            </div>
+                            </div>)
+                            :
+                            loader
                         }
                     </Suspense>
                 </div>

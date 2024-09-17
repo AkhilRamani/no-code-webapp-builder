@@ -1,9 +1,16 @@
 import { TableModal, TableRecord } from "@/types/db/table.types";
 import { getAppDbCollection } from "../mongodb";
 import { ObjectId } from "mongodb";
+import { TableMapper } from "../../mappers/table.mapper";
 
 export class TableRepository {
-    static async create(table: Omit<TableModal, '_id' | 'createdAt' | 'updatedAt'>): Promise<string> {
+    static async getTablesByProjectId(projectId: string): Promise<TableModal[]> {
+        const tablesCollection = await getAppDbCollection("tables")
+        const tables = await tablesCollection.find<TableRecord>({ projectId: new ObjectId(projectId) }).toArray()
+        return tables.map(TableMapper.RecordToTableModal)
+    }
+
+    static async create(table: Omit<TableModal, 'id' | 'createdAt' | 'updatedAt'>): Promise<string> {
         const tablesCollection = await getAppDbCollection("tables")
         const { insertedId } = await tablesCollection.insertOne({
             ...table,

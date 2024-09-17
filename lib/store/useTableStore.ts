@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { createTableApi, deleteTablesApi, updateTablesApi } from '../apis/tableApis';
+import { createTableApi, deleteTablesApi, getTablesApi, updateTablesApi } from '../apis/tableApis';
 import { TableModal } from '@/types/db/table.types';
 import { toast } from 'sonner';
 
@@ -16,9 +16,11 @@ export type OptionFieldSettingType = CommonFieldSetting & {
     options: string[]
 }
 
+export type BooleanFieldSettingType = Omit<CommonFieldSetting, 'required'>;
+
 export type SwitchFieldSettingType = CommonFieldSetting;
 
-export type TableFieldSettings = TextFieldSettingType | SwitchFieldSettingType | OptionFieldSettingType;
+export type TableFieldSettings = TextFieldSettingType | SwitchFieldSettingType | OptionFieldSettingType | BooleanFieldSettingType;
 
 export enum TableFieldTypes {
     STR = 'STR',
@@ -29,20 +31,24 @@ export enum TableFieldTypes {
     REF = 'REF'
 }
 
+export interface TableField {
+    columnName: string;
+    type: TableFieldTypes,
+    setting?: TableFieldSettings
+}
+
 export interface TableSchema {
     id?: string;
     tableName: string;
-    fields: {
-        columnName: string;
-        type: TableFieldTypes,
-        setting?: TableFieldSettings
-    }[]
+    fields: TableField[]
 }
 
 export interface TableStore {
     tables: TableSchema[];
+    fetched: boolean;
 
-    createTable: (tableName: string, schema: TableSchema['fields']) => void;
+    fetchTables: () => Promise<void>;
+    createTable: (tableName: string, schema: TableField[]) => void;
     updateTables: (tables: TableSchema[]) => Promise<void>
 }
 
@@ -55,20 +61,30 @@ const testData: TableStore['tables'] = [
                 columnName: 'Name',
                 type: TableFieldTypes.STR,
                 setting: {
-                    required: true
+                    required: true,
+                    description: 'The name of the order'
                 }
             },
             {
                 columnName: 'Shipped',
                 type: TableFieldTypes.BOOL,
+                setting: {
+                    description: 'Whether the order has been shipped'
+                }
             },
             {
                 columnName: 'Date',
                 type: TableFieldTypes.STR,
+                setting: {
+                    description: 'The date the order was shipped'
+                }
             },
             {
                 columnName: 'Amount',
-                type: TableFieldTypes.NUM
+                type: TableFieldTypes.NUM,
+                setting: {
+                    description: 'The amount of the order'
+                }
             },
             {
                 columnName: 'Status',
@@ -116,6 +132,25 @@ const testData: TableStore['tables'] = [
 export const useTableStore = create<TableStore>((set, get) => ({
     // tables: [...testData],
     tables: [],
+    fetched: false,
+    fetchTables: async () => {
+        const projectId = '66d65fd3def943cfc739e2d1'
+        try {
+            const tables = await getTablesApi(projectId)
+
+            set({
+                tables: tables.map(table => ({
+                    id: table.id,
+                    tableName: table.name,
+                    fields: table.fields
+                })),
+                fetched: true
+            })
+        } catch (error) {
+            console.error('Error fetching tables:', error);
+            toast.error('Error fetching database, please reload the app');
+        }
+    },
     createTable: async (tableName, fields) => {
         const projectId = '66d65fd3def943cfc739e2d1'
         const { id } = await createTableApi(projectId, tableName, fields)
@@ -188,12 +223,13 @@ export const useTableStore = create<TableStore>((set, get) => ({
                 return acc;
             }, [] as typeof tables);
 
-            set({
+            set(state => ({
+                ...state,
                 tables: [
                     ...tables.slice(0, -createdTables.length),
                     ...createdTables
                 ]
-            });
+            }));
         } catch (error) {
             console.error('Error updating tables:', error);
             toast.error('Error updating tables, please try again.');
