@@ -63,8 +63,8 @@ export const DatabaseDialog = () => {
                 </Button>
             </DialogTrigger>
 
-            <DialogContent className="min-w-[70vw] h-5/6 flex flex-col">
-                <DialogHeader className="-mx-6 px-6 pb-5 border-b">
+            <DialogContent className="min-w-[70vw] h-5/6 flex flex-col !rounded-2xl">
+                <DialogHeader className="-mx-6 px-6 pb-5 border-b shadow-sm">
                     <DialogTitle>Database</DialogTitle>
                     <DialogDescription>
                         Create tables for your application as you need
@@ -98,14 +98,14 @@ export const DatabaseDialog = () => {
                 </div>
                 <DialogFooter className="self-end">
                     <DialogClose asChild>
-                        <Button variant='destructive' className="rounded-lg" disabled={isSaving}>Discard</Button>
+                        <Button variant='destructive' className="rounded-lg tracking-wide font-semibold shadow mr-2" disabled={isSaving}>Discard</Button>
                     </DialogClose>
 
                     {isTables || tables.length ? (
                         <Button
                             type="submit"
                             onClick={handleSaveChanges}
-                            className="rounded-lg relative"
+                            className="rounded-lg relative tracking-wide font-semibold shadow"
                             disabled={isSaving}
                         >
                             <span className={clsx(isSaving && 'invisible')}>Save changes</span>

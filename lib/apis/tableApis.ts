@@ -36,9 +36,9 @@ export const createTableApi = async (
     }
 }
 
-export const updateTablesApi = async (tables: Omit<TableModal, 'createdAt' | 'updatedAt' | 'projectId'>[]): Promise<void> => {
+export const updateTablesApi = async (projectId: string, tables: Omit<TableModal, 'createdAt' | 'updatedAt' | 'projectId'>[]): Promise<void> => {
     try {
-        const response = await fetch('/api/tables', {
+        const response = await fetch(`/api/projects/${projectId}/tables`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(tables)

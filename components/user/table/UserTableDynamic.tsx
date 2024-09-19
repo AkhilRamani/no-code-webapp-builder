@@ -4,7 +4,7 @@ import { CardDescription, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { format } from 'date-fns';
 import { UserText } from "../Text/Text";
-import { Loader2, Search } from "lucide-react";
+import { Check, Frown, Loader2, Search, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { UserButton } from "../button/Button";
 import { getTableData_DUMMY } from "@/lib/apis/getTableData_DUMMY";
@@ -13,16 +13,14 @@ import { UserTableProps } from "./types";
 import { useTableStore } from "@/lib/store/useTableStore";
 import { useEffect, useMemo } from "react";
 import { useTableDataStore } from "@/lib/store/useTableDataStore";
-import { TableFormDialog } from "./formDialog/tableFormDialog";
+import { TableFormDialog } from "./formDialog/TableFormDialog";
 
 const formatTimestamp = (timestamp: number) => {
     return format(new Date(timestamp), 'dd MMM yyyy');
 };
 
 export const UserTableDynamic = ({ dataSource }: UserTableProps) => {
-    const {
-        connectors: { connect, drag },
-    } = useNode();
+    const { connectors: { connect, drag } } = useNode();
 
     const { data } = getTableData_DUMMY()
 
@@ -49,7 +47,7 @@ export const UserTableDynamic = ({ dataSource }: UserTableProps) => {
                         <Element id="table-title" is={UserText} text="Orders" classNames={{ fontSize: 'text-2xl', thickNess: 'font-semibold' }} />
                     </CardTitle>
                     <CardDescription>
-                        <Element id="table-desc" is={UserText} text="Recent orders from your store." classNames={{ fontSize: 'text-sm' }} />
+                        <Element id="table-desc" is={UserText} text="Recent orders from your store." classNames={{ fontSize: 'text-sm', all: 'tracking-wide' }} />
                     </CardDescription>
                 </div>
                 <div className="flex items-center gap-4">
@@ -65,13 +63,14 @@ export const UserTableDynamic = ({ dataSource }: UserTableProps) => {
                     <TableFormDialog
                         title={`Add to ${table?.tableName}`}
                         fields={table?.fields || []}
+                        tableId={dataSource}
                     >
                         <Element id='table-add-btn' is={UserButton} size="sm" icon="NotebookPen" label="Add" />
                     </TableFormDialog>
                 </div>
             </div>
             <Table className="">
-                <TableHeader className="sticky top-0 bg-muted/50">
+                <TableHeader className="sticky top-0 bg-muted/50 tracking-wide">
                     <TableRow>
                         {dataSource === 'Dummy' && <>
                             <TableHead className="">Customer</TableHead>
@@ -119,15 +118,34 @@ export const UserTableDynamic = ({ dataSource }: UserTableProps) => {
                                 </TableRow>
 
                                 :
-                                tableData?.data.map((row, index) => (
-                                    <TableRow key={`${index}-tr`} className="text-nowrap">
-                                        {row.data.map((field: string, cellIndex: number) => (
-                                            <TableCell key={`${index}-${cellIndex}-td`}>
-                                                {field}
-                                            </TableCell>
-                                        ))}
+                                tableData?.data.length ?
+                                    tableData?.data.map((row, index) => (
+                                        <TableRow key={`${index}-tr`} className="text-nowrap">
+                                            {
+                                                table?.fields.map((field, cellIndex) => {
+                                                    const value = row[field.columnName];
+
+                                                    if (typeof value === 'boolean') return (
+                                                        <TableCell key={`${index}-${cellIndex}-td`}>
+                                                            {value ? <Check className="w-5 h-5 text-green-700" /> : <X className="w-5 h-5 text-red-500" />}
+                                                        </TableCell>
+                                                    )
+                                                    return (
+                                                        <TableCell key={`${index}-${cellIndex}-td`}>
+                                                            {row[field.columnName]}
+                                                        </TableCell>
+                                                    )
+                                                })
+                                            }
+                                        </TableRow>
+                                    ))
+                                    :
+                                    <TableRow>
+                                        <TableCell colSpan={table?.fields.length} align="center">
+                                            <Frown className="w-5 h-5 mb-2 text-muted-foreground" />
+                                            <p className="text-muted-foreground tracking-wider">Nothing added yet</p>
+                                        </TableCell>
                                     </TableRow>
-                                ))
                     }
                 </TableBody>
             </Table>

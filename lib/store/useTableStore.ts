@@ -208,7 +208,7 @@ export const useTableStore = create<TableStore>((set, get) => ({
 
             const [createdResponse] = await Promise.all([
                 Promise.all(createPromises),
-                tablesToUpdate.length && updateTablesApi(tablesToUpdate),
+                tablesToUpdate.length && updateTablesApi(projectId, tablesToUpdate),
                 tablesToDelete.length && deleteTablesApi(projectId, tablesToDelete)
             ]);
 

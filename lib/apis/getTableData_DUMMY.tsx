@@ -176,10 +176,8 @@ export const getTableData_DUMMY = () => {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        setTimeout(() => {
-            setData(tableData)
-            setLoading(false)
-        }, 3000)
+        setData(tableData)
+        setLoading(false)
     }, [])
 
     return { data, loading }

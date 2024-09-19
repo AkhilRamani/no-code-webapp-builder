@@ -10,4 +10,12 @@ export class TableDataRepository {
 
         return tableData;
     }
+
+    static async insertRow(projectId: string, tableId: string, data: Record<string, any>): Promise<void> {
+        const collectionName = getCollectionName(projectId, tableId);
+        const tableDataCollection = await getTenantDbCollection(collectionName);
+
+        const result = await tableDataCollection.insertOne(data);
+        console.log(result);
+    }
 }
