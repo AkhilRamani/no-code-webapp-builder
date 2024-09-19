@@ -9,7 +9,7 @@ import { UserSidebar } from "../user/Sidebar/Sidebar";
 import { UserHeader } from "../user/Header";
 import clsx from "clsx";
 import { UserTable } from "../user/table/UserTable";
-import { Blocks, Layers3 } from "lucide-react";
+import { Blocks, Layers2, Layers3, Layers as LayersIcon } from "lucide-react";
 import { AvatarTool } from "./tools/AvatarTool";
 import { UserNumberCard } from "../user/visulisation/userNumberCard/UserNumberCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
@@ -36,15 +36,18 @@ export const Toolbox: React.FC = () => {
         </div> */}
 
         <Tabs className="p-4 pb-0 flex flex-col h-full flex-1" defaultValue="component">
-          <TabsList className="w-full rounded-lg">
+          <TabsList className="w-full rounded-lg shrink-0">
             <TabsTrigger className="flex-1 h-full data-[state=active]:shadow-md rounded-lg" value="component" >
-              <Blocks className="h-4 w-4" />
+              <Blocks className="h-4 w-4 fill-current opacity-60" />
+              {/* Blocks */}
             </TabsTrigger>
 
             <TabsTrigger className="flex-1 h-full data-[state=active]:shadow-md rounded-lg" value="layer">
-              <Layers3 className="h-4 w-4" />
+              <Layers2 className="h-4 w-4 stroke-[3] opacity-55" />
+              {/* Layers */}
             </TabsTrigger>
           </TabsList>
+
           <Separator className="mt-4" />
 
           <TabsContent value="component" className="overflow-auto h-full">

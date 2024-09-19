@@ -2,15 +2,15 @@ import { NextResponse } from "next/server";
 import { createTableController } from "@/lib/server/controllers/table/createTable.controller";
 import { ObjectId } from "mongodb";
 
-export async function POST(request: Request) {
+export async function POST(request: Request, { params }: { params: { projectId: string } }) {
     try {
-        const { projectId, name, fields, trackingId } = await request.json();
+        const { name, fields, trackingId } = await request.json();
 
-        if (!ObjectId.isValid(projectId)) {
+        if (!ObjectId.isValid(params.projectId)) {
             return NextResponse.json({ error: `Invalid projectId` }, { status: 400 });
         }
 
-        const res = await createTableController({ projectId, name, fields })
+        const res = await createTableController({ projectId: params.projectId, name, fields })
 
         return NextResponse.json({ ...res, trackingId }, { status: 201 });
     } catch (error) {

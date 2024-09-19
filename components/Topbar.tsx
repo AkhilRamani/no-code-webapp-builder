@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { useEditor } from "@craftjs/core";
 import lz from "lzutf8";
 import copy from "copy-to-clipboard";
-import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { Input } from "./ui/input";
 import clsx from "clsx";
-import { Play } from "lucide-react";
-import { Toggle } from "./ui/toggle";
+import { Play, Undo2 } from "lucide-react";
 import { DatabaseDialog } from "./database/DatabaseDialog";
+import { redirect, useRouter } from "next/navigation";
 
 export const Topbar: React.FC = () => {
+  const router = useRouter();
   const { actions, query, enabled } = useEditor((state) => ({
     enabled: state.options.enabled,
   }));
@@ -37,11 +36,13 @@ export const Topbar: React.FC = () => {
   return (
     <div className="bg-zinc-100">
       <div className={clsx("flex items-center px-4 py-4 bg-white border-b justify-between duration-500 ease-out", !enabled && '-mt-20 mb-10')}>
-        {/* <Button size='sm' variant='secondary' className="rounded-lg gap-2 text-muted-foreground hover:text-primary">
-          <Database className="h-[1.1rem] w-[1.1rem]" />
-        </Button> */}
+        <div>
+          <Button size='sm' variant='secondary' className="rounded-lg gap-2 text-muted-foreground hover:text-primary hover:bg-slate-200 mr-3" onClick={() => router.push('/dashboard')}>
+            <Undo2 className="h-[1.1rem] w-[1.1rem] stroke-[2.7]" />
+          </Button>
 
-        <DatabaseDialog />
+          <DatabaseDialog />
+        </div>
 
         <div className="flex gap-4">
           <Button variant="secondary" size="sm" onClick={onCopyExportClick}>

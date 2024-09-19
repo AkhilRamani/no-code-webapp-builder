@@ -9,7 +9,7 @@ export default async function AuthenticationPage() {
 
     if (session) {
         console.log(session)
-        redirect("/");
+        redirect("/builder");
     }
 
     return (

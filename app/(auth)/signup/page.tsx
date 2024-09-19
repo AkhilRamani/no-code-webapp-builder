@@ -13,7 +13,7 @@ export default async function AuthenticationPage() {
     const session = await getServerSession();
 
     if (session) {
-        redirect("/");
+        redirect("/builder");
     }
 
     return (
