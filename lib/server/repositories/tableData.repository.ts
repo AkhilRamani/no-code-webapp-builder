@@ -1,5 +1,5 @@
-import { getCollectionName } from "../../utils/getCollectionName";
-import { getTenantDbCollection } from "../mongodb";
+import { getCollectionName } from "../utils/getCollectionName";
+import { getTenantDbCollection } from "../appDb/mongodb";
 
 export class TableDataRepository {
     static async getAllTableData(projectId: string, tableId: string): Promise<Record<string, any>[]> {

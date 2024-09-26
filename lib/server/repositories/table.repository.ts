@@ -1,7 +1,7 @@
 import { TableModal, TableRecord } from "@/types/db/table.types";
-import { getAppDbCollection } from "../mongodb";
+import { getAppDbCollection } from "../appDb/mongodb";
 import { ObjectId } from "mongodb";
-import { TableMapper } from "../../mappers/table.mapper";
+import { TableMapper } from "../mappers/table.mapper";
 
 export class TableRepository {
     static async getTablesByProjectId(projectId: string): Promise<TableModal[]> {

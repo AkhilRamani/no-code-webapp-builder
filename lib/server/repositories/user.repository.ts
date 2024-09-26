@@ -1,5 +1,5 @@
 import { UserRecord } from "@/types/db/user.types";
-import { getAppDbCollection } from "../mongodb";
+import { getAppDbCollection } from "../appDb/mongodb";
 
 export class UserRepository {
     static async create(user: Omit<UserRecord, '_id'>): Promise<string> {

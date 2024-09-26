@@ -1,4 +1,4 @@
-import { getTenantDb } from "../mongodb";
+import { getTenantDb } from "../appDb/mongodb";
 import { getCollectionName } from "@/lib/server/utils/getCollectionName";
 
 export class CollectionRepository {

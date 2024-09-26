@@ -1,4 +1,4 @@
-import { UserRepository } from "@/lib/server/appDb/repositories/user.repository";
+import { UserRepository } from "@/lib/server/repositories/user.repository";
 import { UserRecord } from "@/types/db/user.types";
 import { BadRequestException } from "../exceptions/badRequest.exception";
 import { hash } from "bcryptjs";

@@ -15,7 +15,7 @@ export const OptionFieldSetting = ({ setting, onOptionAdd, onOptionEdit, onOptio
     return (
         <div className="grid gap-6">
             <div className="flex gap-4 text-nowrap relative">
-                <Label className="text-muted-foreground min-w-[30%] mt-2.5">Options</Label>
+                <Label className="text-muted-foreground min-w-[30%] mt-2.5 tracking-wide">Options</Label>
                 <div className="flex flex-col flex-1 gap-2 max-w-48">
                     {
                         setting.options?.map((option, index) => (

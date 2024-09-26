@@ -18,15 +18,15 @@ export default async function AuthenticationPage() {
 
     return (
         <>
-            <div className="container relative hidden h-full flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+            <div className="container relative h-full flex-col items-center justify-center grid max-w-none md:grid-cols-2 px-0">
                 <Link
                     href="/signin"
-                    className="absolute right-4 top-4 md:right-8 md:top-8 hover:bg-secondary py-2 px-4 rounded-lg"
+                    className="absolute right-4 top-4 md:right-8 md:top-8 hover:bg-secondary py-2 px-4 rounded-lg text-sm font-semibold tracking-wide bg-slate-50"
                 >
                     Login
                 </Link>
-                <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
-                    <div className="absolute inset-0 bg-zinc-900" />
+                <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r md:flex">
+                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-sky-900" />
                     <div className="relative z-20 flex items-center text-lg font-medium">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +53,7 @@ export default async function AuthenticationPage() {
                         </blockquote>
                     </div>
                 </div>
-                <div className="lg:p-8">
+                <div className="md:p-8">
                     <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
                         <div className="flex flex-col space-y-2 text-center">
                             <h1 className="text-2xl font-semibold tracking-tight">

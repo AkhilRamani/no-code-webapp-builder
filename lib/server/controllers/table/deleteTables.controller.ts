@@ -1,5 +1,5 @@
-import { CollectionRepository } from "../../appDb/repositories/collection.repository";
-import { TableRepository } from "../../appDb/repositories/table.repository";
+import { CollectionRepository } from "../../repositories/collection.repository";
+import { TableRepository } from "../../repositories/table.repository";
 
 export const deleteTablesController = async (projectId: string, tableIds: string[]) => {
     await TableRepository.deleteMany(tableIds);

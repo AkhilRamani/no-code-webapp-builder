@@ -48,7 +48,7 @@ const DatabaseLayout = ({ tables, setTables, createTable }: DatabaseLayoutProps)
 
                     <EditTableNamePopover onDone={createTable}>
                         <Button variant='secondary' size='icon' className="h-6 w-6 -mt-2 -mb-2 rounded-full hover:bg-slate-200">
-                            <Plus className="h-4 w-4" />
+                            <Plus className="h-4 w-4 stroke-[2.5] opacity-75" />
                         </Button>
                     </EditTableNamePopover>
 
@@ -70,7 +70,7 @@ const DatabaseLayout = ({ tables, setTables, createTable }: DatabaseLayoutProps)
                                         <DropdownMenuTrigger asChild>
                                             <EllipsisVertical className="h-4 w-4" />
                                         </DropdownMenuTrigger>
-                                        <DropdownMenuContent className="rounded-lg mt-1">
+                                        <DropdownMenuContent className="rounded-lg mt-1 -mr-4" align="end" sideOffset={14}>
                                             <DropdownMenuGroup>
                                                 <DropdownMenuItem className="px-3 py-2 rounded-lg" onClick={() => deleteTable(index)}>
                                                     <span className="opacity-80">Delete</span>

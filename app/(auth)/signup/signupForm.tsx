@@ -146,11 +146,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 							disabled={isLoading}
 							onChange={(e) => setPassword(e.target.value)}
 						/> */}
-						<Button disabled={isLoading}>
-							{isLoading && (
-								<Loader2 className="mr-2 h-4 w-4 animate-spin" />
-							)}
-							Sign Up with Email
+						<Button disabled={isLoading} className='tracking-wide'>
+							{isLoading ?
+								<Loader2 className="h-5 w-5 animate-spin stroke-[2.5]" />
+								:
+								'Sign Up with Email'
+							}
 						</Button>
 					</div>
 				</form>

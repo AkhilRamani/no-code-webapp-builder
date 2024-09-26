@@ -6,12 +6,14 @@ import { TableSchema, useTableStore } from "@/lib/store/useTableStore"
 import { EditTableNamePopover } from "./TableEditPopover"
 import { useToggle } from "@/lib/hooks/useToggle.hook.ts"
 import clsx from "clsx"
+import { useParams } from "next/navigation"
 
 const DatabaseLayout = lazy(() => import("./DatabaseLayout.tsx"));
 
 const loader = <div className="h-full flex flex-1 justify-center"><Loader2 className="m-auto animate-spin h-10 w-10 opacity-40" /></div>
 
 export const DatabaseDialog = () => {
+    const { projectId } = useParams<{ projectId: string }>();
     const [isOpen, setIsOpen] = useState(false);
 
     const { tables, updateTables, fetchTables, fetched } = useTableStore(({ tables, updateTables, fetchTables, fetched }) => ({ tables, updateTables, fetchTables, fetched }))
@@ -19,9 +21,7 @@ export const DatabaseDialog = () => {
     const [isSaving, toggleIsSaving] = useToggle(false);
 
     useEffect(() => {
-        if (!fetched) {
-            fetchTables()
-        }
+        fetchTables(projectId)
     }, [])
 
     useEffect(() => {
@@ -31,7 +31,7 @@ export const DatabaseDialog = () => {
     const handleSaveChanges = async () => {
         toggleIsSaving();
 
-        await updateTables(localTables)
+        await updateTables(projectId, localTables)
 
         toggleIsSaving();
         setIsOpen(false);
@@ -63,14 +63,14 @@ export const DatabaseDialog = () => {
                 </Button>
             </DialogTrigger>
 
-            <DialogContent className="min-w-[70vw] h-5/6 flex flex-col !rounded-2xl">
-                <DialogHeader className="-mx-6 px-6 pb-5 border-b shadow-sm">
+            <DialogContent className="min-w-[70vw] h-5/6 flex flex-col !rounded-2xl p-0 gap-0">
+                <DialogHeader className="px-5 py-5 border-b">
                     <DialogTitle>Database</DialogTitle>
                     <DialogDescription>
                         Create tables for your application as you need
                     </DialogDescription>
                 </DialogHeader>
-                <div className="grow pt-6 pb-2 flex overflow-auto">
+                <div className="grow pt-7 px-5 flex overflow-auto">
                     {/* <DatabaseLayout tables={localTables} setTables={setLocalTables} /> */}
                     <Suspense fallback={loader}>
                         {fetched ? (isTables ?
@@ -96,7 +96,7 @@ export const DatabaseDialog = () => {
                         }
                     </Suspense>
                 </div>
-                <DialogFooter className="self-end">
+                <DialogFooter className="px-5 py-5">
                     <DialogClose asChild>
                         <Button variant='destructive' className="rounded-lg tracking-wide font-semibold shadow mr-2" disabled={isSaving}>Discard</Button>
                     </DialogClose>

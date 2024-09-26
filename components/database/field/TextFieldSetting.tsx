@@ -25,7 +25,7 @@ export const TextFieldSetting = ({ setting, onDiscriptionChange, onPlaceholderCh
                 <Switch checked={!!setting?.required} onCheckedChange={onRequiredChange}></Switch>
             </div> */}
         <div className="flex items-center gap-4 text-nowrap relative">
-            <Label className="text-muted-foreground min-w-[30%]">Placeholder</Label>
+            <Label className="text-muted-foreground min-w-[30%] tracking-wide">Placeholder</Label>
             <Input value={setting?.placeholder ?? ''} onChange={(e) => onPlaceholderChange(e.target.value)} className="rounded-lg" />
             <CornerTooltip tip="Placeholder text to display at forms' field" />
         </div>

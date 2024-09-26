@@ -10,6 +10,7 @@ export interface TableRecord {
         type: TableFieldTypes,
         setting?: TableFieldSettings
     }[],
+    belongsTo: ObjectId;
     createdAt: Date;
     updatedAt?: Date;
 }
@@ -23,6 +24,7 @@ export interface TableModal {
         type: TableFieldTypes,
         setting?: TableFieldSettings
     }[],
+    belongsTo: string;
     createdAt: Date;
     updatedAt?: Date;
 }

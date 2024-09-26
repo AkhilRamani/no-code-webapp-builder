@@ -1,7 +1,7 @@
 import { NextAuthOptions, User } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { compare } from "bcryptjs"
-import { UserRepository } from "@/lib/server/appDb/repositories/user.repository"
+import { UserRepository } from "@/lib/server/repositories/user.repository"
 
 export const authConfig: NextAuthOptions = {
   // adapter: MongoDBAdapter(mongoClient),

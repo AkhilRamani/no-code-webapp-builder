@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { createTableApi, deleteTablesApi, getTablesApi, updateTablesApi } from '../apis/tableApis';
 import { TableModal } from '@/types/db/table.types';
 import { toast } from 'sonner';
+import { useParams } from 'next/navigation';
 
 export type CommonFieldSetting = {
     description?: string;
@@ -47,9 +48,9 @@ export interface TableStore {
     tables: TableSchema[];
     fetched: boolean;
 
-    fetchTables: () => Promise<void>;
-    createTable: (tableName: string, schema: TableField[]) => void;
-    updateTables: (tables: TableSchema[]) => Promise<void>
+    fetchTables: (projectId: string) => Promise<void>;
+    createTable: (projectId: string, tableName: string, schema: TableField[]) => void;
+    updateTables: (projectId: string, tables: TableSchema[]) => Promise<void>
 }
 
 const testData: TableStore['tables'] = [
@@ -133,8 +134,7 @@ export const useTableStore = create<TableStore>((set, get) => ({
     // tables: [...testData],
     tables: [],
     fetched: false,
-    fetchTables: async () => {
-        const projectId = '66d65fd3def943cfc739e2d1'
+    fetchTables: async (projectId) => {
         try {
             const tables = await getTablesApi(projectId)
 
@@ -151,8 +151,8 @@ export const useTableStore = create<TableStore>((set, get) => ({
             toast.error('Error fetching database, please reload the app');
         }
     },
-    createTable: async (tableName, fields) => {
-        const projectId = '66d65fd3def943cfc739e2d1'
+    createTable: async (projectId, tableName, fields) => {
+        // const projectId = '66d65fd3def943cfc739e2d1'
         const { id } = await createTableApi(projectId, tableName, fields)
 
         set(state => ({
@@ -163,12 +163,12 @@ export const useTableStore = create<TableStore>((set, get) => ({
             }]
         }))
     },
-    updateTables: async (tables: TableSchema[]) => {
-        const projectId = '66d65fd3def943cfc739e2d1'; // Assuming this is the same project ID used in createTable
+    updateTables: async (projectId, tables) => {
+        // const projectId = '66d65fd3def943cfc739e2d1'; // Assuming this is the same project ID used in createTable
         const existingTables = get().tables;
 
-        const tablesToCreate: (Omit<TableModal, 'id' | 'createdAt' | 'updatedAt'> & { trackingId: string })[] = [];
-        const tablesToUpdate: Omit<TableModal, 'createdAt' | 'updatedAt'>[] = [];
+        const tablesToCreate: (Omit<TableModal, 'id' | 'createdAt' | 'updatedAt' | 'belongsTo'> & { trackingId: string })[] = [];
+        const tablesToUpdate: Omit<TableModal, 'createdAt' | 'updatedAt' | 'belongsTo'>[] = [];
         const tablesToDelete: string[] = [];
 
         const existingTableMap = new Map(existingTables.map(table => [table.id, table]));

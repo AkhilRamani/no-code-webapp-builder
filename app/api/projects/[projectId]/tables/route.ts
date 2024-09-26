@@ -3,8 +3,10 @@ import { ObjectId } from 'mongodb';
 import { updateTablesController } from '@/lib/server/controllers/table/updateTables.controller';
 import { deleteTablesController } from '@/lib/server/controllers/table/deleteTables.controller';
 import { getTablesController } from '@/lib/server/controllers/table/getTables.controller';
+import { authMiddleware, NextRequestAuthenticated } from '@/lib/auth/authMiddleware';
+import { createTableController } from '@/lib/server/controllers/table/createTable.controller';
 
-export async function GET(request: NextRequest, { params }: { params: { projectId: string } }) {
+export const GET = authMiddleware(async (request: NextRequestAuthenticated, { params }: { params: { projectId: string } }) => {
     try {
         const { projectId } = params;
 
@@ -19,9 +21,27 @@ export async function GET(request: NextRequest, { params }: { params: { projectI
         console.error('Error fetching tables:', error);
         return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
-}
+})
 
-export async function PATCH(request: NextRequest) {
+export const POST = authMiddleware(async (request: NextRequestAuthenticated, { params }: { params: { projectId: string } }) => {
+    try {
+        const userId = request.user.id;
+        const { name, fields, trackingId } = await request.json();
+
+        if (!ObjectId.isValid(params.projectId)) {
+            return NextResponse.json({ error: `Invalid projectId` }, { status: 400 });
+        }
+
+        const res = await createTableController({ projectId: params.projectId, name, fields, userId })
+
+        return NextResponse.json({ ...res, trackingId }, { status: 201 });
+    } catch (error) {
+        console.error("Error creating table:", error);
+        return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    }
+})
+
+export const PATCH = authMiddleware(async (request: NextRequestAuthenticated) => {
     try {
         const updates = await request.json();
 
@@ -46,9 +66,9 @@ export async function PATCH(request: NextRequest) {
         console.error('Error updating tables:', error);
         return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
-}
+})
 
-export async function DELETE(request: NextRequest, { params }: { params: { projectId: string } }) {
+export const DELETE = authMiddleware(async (request: NextRequest, { params }: { params: { projectId: string } }) => {
     try {
         const { projectId } = params;
         const { tableIds } = await request.json();
@@ -77,4 +97,4 @@ export async function DELETE(request: NextRequest, { params }: { params: { proje
         console.error('Error deleting tables:', error);
         return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
-}
+})

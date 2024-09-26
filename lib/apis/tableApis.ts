@@ -12,7 +12,7 @@ export const createTableApi = async (
     trackingId?: string;
 }> => {
     try {
-        const response = await fetch(`/api/projects/${projectId}/tables/create`, {
+        const response = await fetch(`/api/projects/${projectId}/tables`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -36,7 +36,7 @@ export const createTableApi = async (
     }
 }
 
-export const updateTablesApi = async (projectId: string, tables: Omit<TableModal, 'createdAt' | 'updatedAt' | 'projectId'>[]): Promise<void> => {
+export const updateTablesApi = async (projectId: string, tables: Omit<TableModal, 'createdAt' | 'updatedAt' | 'projectId' | 'belongsTo'>[]): Promise<void> => {
     try {
         const response = await fetch(`/api/projects/${projectId}/tables`, {
             method: 'PATCH',

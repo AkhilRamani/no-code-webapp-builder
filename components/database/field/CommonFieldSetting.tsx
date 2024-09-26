@@ -13,13 +13,13 @@ interface CommonFieldSettingProps {
 export const CommonFieldSetting = ({ setting, onDiscriptionChange, onRequiredChange }: CommonFieldSettingProps) => (
     <div className="grid gap-6">
         <div className="flex items-center gap-4 text-nowrap relative">
-            <Label className="text-muted-foreground min-w-[30%]">Short description</Label>
+            <Label className="text-muted-foreground min-w-[30%] tracking-wide">Short description</Label>
             <Input value={setting?.description ?? ''} onChange={e => onDiscriptionChange(e.target.value)} className="rounded-lg" />
 
             <CornerTooltip tip="Discription will be displayed at forms" />
         </div>
         <div className="flex items-center gap-4 text-nowrap">
-            <Label className="text-muted-foreground min-w-[30%]">Required</Label>
+            <Label className="text-muted-foreground min-w-[30%] tracking-wide">Required</Label>
             <Switch checked={!!setting?.required} onCheckedChange={onRequiredChange}></Switch>
         </div>
 

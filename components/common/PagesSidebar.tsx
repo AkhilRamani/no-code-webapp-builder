@@ -3,18 +3,35 @@
 import { LogOut, User } from "lucide-react"
 import { Avatar, AvatarFallback } from "../ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu"
-import { signOut } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 import { Button } from "../ui/button"
+import { getAvatarInitials, titleCase } from "@/lib/utils"
 
 export const PagesSidebar = () => {
+    const { data: session } = useSession()
+    const firstName = session?.user?.firstName ?? '';
+    const lastName = session?.user?.lastName ?? '';
+
     const handleLogout = () => {
-        signOut({ callbackUrl: '/' })
+        signOut({ callbackUrl: '/signin' })
     }
 
     return (
-        <div className="w-1/5 bg-white border-r flex flex-col">
-            <div className="py-5 border-b px-6">
-                <h1 className="text-xl font-semibold tracking-normal">Portals</h1>
+        <div className="w-1/5 bg-white border-r flex flex-col shrink-0">
+            <div className="py-5 border-b px-6 flex items-center gap-1">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="mr-2 h-6 w-6"
+                >
+                    <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
+                </svg>
+                <h1 className="text-lg font-medium">Portals</h1>
             </div>
             <div className="flex flex-1 p-3 flex-col justify-between">
                 <div></div>
@@ -23,9 +40,11 @@ export const PagesSidebar = () => {
                     <DropdownMenuTrigger asChild>
                         <Button variant='ghost' className="px-3 h-14 justify-start hover:bg-slate-100 rounded-lg flex items-center gap-3">
                             <Avatar>
-                                <AvatarFallback className="bg-slate-200">AK</AvatarFallback>
+                                <AvatarFallback className="bg-slate-200">
+                                    {getAvatarInitials(firstName, lastName)}
+                                </AvatarFallback>
                             </Avatar>
-                            Akhil Ramani
+                            {titleCase(firstName)} {titleCase(lastName)}
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-56 mr-4 rounded-xl ml-4" align="end" side="right">
