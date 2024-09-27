@@ -37,10 +37,10 @@ export default function Dashboard() {
                         />
                     </div>
                 </div>
-                <div className="grid grid-cols-3 px-16 gap-10 pt-2 flex-wrap overflow-auto">
+                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5 px-16 gap-10 2xl:gap-14 pt-2 flex-wrap overflow-auto">
                     {loading ?
                         <>
-                            {[1, 2, 3].map((i) => (
+                            {Array.from({ length: 6 }).map((_, i) => (
                                 <ProjectItemSkeleton key={i} index={i} />
                             ))}
                         </>

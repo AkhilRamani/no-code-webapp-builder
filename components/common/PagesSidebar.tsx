@@ -17,7 +17,7 @@ export const PagesSidebar = () => {
     }
 
     return (
-        <div className="w-1/5 bg-white border-r flex flex-col shrink-0">
+        <div className="w-72 bg-white border-r flex flex-col shrink-0">
             <div className="py-5 border-b px-6 flex items-center gap-1">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

@@ -5,9 +5,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 
 export const ProjectItem = ({ name, projectId, index, onDeleteAction }: { name: string, projectId: string, index: number, onDeleteAction: () => void }) => {
     return (
-        <div className="relative group pb-2 animate-in duration-500 transition-all fade-in slide-in-from-bottom-2" style={{ animationDelay: `${index * 80}ms`, animationFillMode: 'backwards' }}>
+        <div className="relative group max-w-80 lg:max-w-none pb-2 animate-in duration-500 transition-all fade-in slide-in-from-bottom-2" style={{ animationDelay: `${index * 80}ms`, animationFillMode: 'backwards' }}>
             <Link href={`/builder/${projectId}`}>
-                <div className="w-80 h-52 bg-white rounded-xl shadow-lg border hover:-translate-y-1 transition-transform duration-300 -group-hover:-translate-y-1">
+                <div className="w-full h-52 bg-white rounded-xl shadow-lg border hover:-translate-y-1 transition-transform duration-300 -group-hover:-translate-y-1">
                 </div>
             </Link>
 
@@ -43,8 +43,8 @@ export const ProjectItem = ({ name, projectId, index, onDeleteAction }: { name: 
 }
 
 export const ProjectItemSkeleton = ({ index }: { index: number }) => (
-    <div className="animate-pulse flex flex-col gap-4 duration-1000" style={{ animationDelay: `${index * 100}ms` }}>
-        <div className="w-80 h-52 bg-gray-200/70 rounded-xl border" />
+    <div className="animate-pulse max-w-80 lg:max-w-none flex flex-col gap-4 duration-1000" style={{ animationDelay: `${index * 100}ms` }}>
+        <div className="h-52 bg-gray-200/70 rounded-xl border" />
         <div className="h-6 bg-gray-200/70 rounded-full" />
     </div>
 )
