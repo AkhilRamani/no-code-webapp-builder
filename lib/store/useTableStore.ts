@@ -2,7 +2,6 @@ import { create } from 'zustand'
 import { createTableApi, deleteTablesApi, getTablesApi, updateTablesApi } from '../apis/tableApis';
 import { TableModal } from '@/types/db/table.types';
 import { toast } from 'sonner';
-import { useParams } from 'next/navigation';
 
 export type CommonFieldSetting = {
     description?: string;

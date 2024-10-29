@@ -26,7 +26,7 @@ export const Toolbox: React.FC = () => {
   }));
 
   return (
-    <div className={clsx("border-r w-56 h-full bg-white", 'duration-300 ease-out', enabled ? 'ml-0' : '-ml-56')}>
+    <div className={clsx("border-r w-56 h-full bg-white z-[2]", 'duration-300 ease-out', enabled ? 'ml-0' : '-ml-56')}>
       <div className="flex flex-col h-full space-y-6">
         {/* <div className="flex w-full h-14 items-center border-b px-4 lg:h-[60px] lg:px-6 shrink-0">
           <div className="flex items-center gap-2 font-semibold" >

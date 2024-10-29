@@ -24,6 +24,9 @@ export const getAllProjectsApi = async (): Promise<ProjectModal[]> => {
     try {
         const response = await fetch('/api/projects');
         const resData = await response.json();
+        if (!response.ok) {
+            throw new Error(`Failed to get projects: ${resData.error || response.statusText}`);
+        }
         return resData;
     } catch (error) {
         console.error('Error getting projects:', error);

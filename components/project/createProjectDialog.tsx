@@ -7,12 +7,14 @@ import { useProjectStore } from "@/lib/store/useProjectStore"
 import { Loader2 } from "lucide-react"
 import { toast } from "sonner"
 import { useRouter } from 'nextjs-toploader/app';
+import { usePageStore } from "@/lib/store/usePageStore"
 
 export const CreateProjectDialog = ({ trigger }: { trigger: React.ReactNode }) => {
     const [isDialogOpen, setIsDialogOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [projectName, setProjectName] = useState("")
     const createProject = useProjectStore(store => store.createProject)
+    const createPage = usePageStore(store => store.createPage)
     const router = useRouter();
 
     const onSubmit = async () => {
@@ -23,12 +25,14 @@ export const CreateProjectDialog = ({ trigger }: { trigger: React.ReactNode }) =
         }
         setIsLoading(true)
         const projectId = await createProject(name)
+
         if (projectId) {
+            createPage('Home', projectId, false);
+
             router.push(`/builder/${projectId}`)
         }
         setIsLoading(false)
         setIsDialogOpen(false)
-
     }
 
     return (

@@ -53,7 +53,7 @@ export const RenderNode = ({ render }) => {
 
         const elem = document.querySelector('.craftjs-renderer')
         const highlight = document.createElement('div');
-        highlight.className = clsx('ring ring-offset-1 ring-[#9ccaff] shadow-[0_0_16px_#6eb2ff9e] pointer-events-none rounded-md', isActive && 'animate-pulse');
+        highlight.className = clsx('ring ring-offset-1 ring-[#9ccaff] shadow-[0_0_16px_#6eb2ff9e] pointer-events-none rounded-md z-30', isActive && 'animate-pulse');
         // document.body.appendChild(highlight);
         elem.appendChild(highlight);
         highlightRef.current = highlight;
@@ -120,7 +120,7 @@ export const RenderNode = ({ render }) => {
                     // ||
                     <div
                         ref={currentRef}
-                        className="fixed flex gap-2 -translate-y-3 -mt-[29px] rounded-t-xl transition-all duration-200 animate-in"
+                        className="fixed flex gap-2 -translate-y-3 -mt-[29px] rounded-t-xl transition-all duration-200 animate-in z-30"
                         style={{
                             left: getPos(dom).left,
                             top: getPos(dom).top,

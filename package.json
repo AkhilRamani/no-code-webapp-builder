@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@auth/mongodb-adapter": "^3.4.2",
+    "@aws-sdk/client-s3": "^3.670.0",
+    "@aws-sdk/s3-request-presigner": "^3.670.0",
     "@craftjs/core": "^0.2.8",
     "@craftjs/layers": "^0.2.5",
     "@hookform/resolvers": "^3.9.0",
