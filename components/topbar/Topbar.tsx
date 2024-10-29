@@ -1,11 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
 import { useEditor } from "@craftjs/core";
-import lz from "lzutf8";
-import copy from "copy-to-clipboard";
-import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
-import { Input } from "../ui/input";
 import clsx from "clsx";
 import { Play, Undo2 } from "lucide-react";
 import { DatabaseDialog } from "../database/DatabaseDialog";
@@ -17,25 +12,9 @@ import { usePageBinaryStore } from "@/lib/store/usePageBinaryStore";
 
 export const Topbar: React.FC = () => {
   const router = useRouter();
-  const { actions, query, enabled } = useEditor((state) => ({
+  const { actions, enabled } = useEditor((state) => ({
     enabled: state.options.enabled,
   }));
-
-  const onCopyExportClick = () => {
-    const json = query.serialize();
-    copy(lz.encodeBase64(lz.compress(json)));
-
-    toast("State copied to clipboard");
-  };
-
-  const [loadTxt, setLoadTxt] = useState<string>();
-
-  const onLoadClick = () => {
-    const json = lz.decompress(lz.decodeBase64(loadTxt as string));
-    actions.deserialize(json);
-
-    toast("State loaded");
-  };
 
   const resetPageStore = usePageStore(store => store.resetPageStore);
   const resetPageBinaryStore = usePageBinaryStore(store => store.resetPageBinaryStore);
@@ -60,31 +39,6 @@ export const Topbar: React.FC = () => {
 
         <div className="flex gap-4 items-center h-full">
           <PageSaveHandler />
-
-          <Button variant="secondary" size="sm" onClick={onCopyExportClick}>
-            Copy page
-          </Button>
-
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="default" size="sm">
-                Load page
-              </Button>
-            </SheetTrigger>
-            <SheetContent>
-              <SheetHeader>
-                <SheetTitle>Load project</SheetTitle>
-                <SheetDescription>Load your previous project from exported data</SheetDescription>
-              </SheetHeader>
-              <div className="py-4 pt-8 flex gap-4">
-                <Input onChange={(e) => setLoadTxt(e.target.value)} />
-
-                <SheetClose asChild>
-                  <Button onClick={onLoadClick}>Load</Button>
-                </SheetClose>
-              </div>
-            </SheetContent>
-          </Sheet>
         </div>
       </div>
 
