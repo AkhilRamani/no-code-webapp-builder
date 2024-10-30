@@ -1,4 +1,3 @@
-import { Metadata } from "next"
 import Link from "next/link"
 import { SignInForm } from "./signinForm"
 import { getServerSession } from "next-auth";
@@ -8,8 +7,7 @@ export default async function AuthenticationPage() {
     const session = await getServerSession();
 
     if (session) {
-        console.log(session)
-        redirect("/builder");
+        redirect("/dashboard");
     }
 
     return (

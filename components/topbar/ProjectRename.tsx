@@ -26,7 +26,7 @@ export const ProjectRename = () => {
 
     return !loading ? (
         <ContentEditable
-            className="bg-slate-100/60 hover:bg-slate-200/50 duration-200 focus:bg-slate-200/60 focus:text-slate-800 tracking-wide text-sm min-w-36 w-full text-slate-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2"
+            className="bg-slate-100/60 hover:bg-slate-200/50 duration-200 focus:bg-slate-200/60 focus:text-slate-800 tracking-wide text-sm min-w-36 w-full text-slate-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 ring-blue-400"
             html={text}
             onBlur={handleUpdateProject}
             onChange={() => { }} // Add an empty onChange handler to satisfy the type checker

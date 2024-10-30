@@ -31,7 +31,7 @@ export const PageList = ({ hidden }: { hidden?: boolean }) => {
             <Button variant='secondary' size='icon' onClick={toggleShowList} className="absolute top-6 right-6 h-8 w-8 rounded-lg bg-gray-300/50 hover:bg-gray-300/70 z-10">
                 <X className="w-4 h-4 stroke-[3] opacity-60" />
             </Button>
-            <div className="py-8 px-52 w-full grid grid-cols-2 gap-8 overflow-auto">
+            <div className="py-8 px-52 w-full grid grid-cols-2 2xl:grid-cols-4 gap-8 overflow-auto">
                 {pages.map((page, index) => (
                     <PageItem key={page.id} index={index} name={page.name} onClick={() => _handlePageClick(page.id)} />
                 ))}
