@@ -1,7 +1,7 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "./ui/label"
 import { Button } from "./ui/button"
-import { LayoutGrid, Plus } from "lucide-react"
+import { LayoutGrid, Lock, LockKeyhole, Plus, Shield, ShieldCheck } from "lucide-react"
 import { usePageStore } from "@/lib/store/usePageStore"
 import { CreatePageDrawer } from "./page/createPageDrawer"
 import { useEditorPageChange } from "@/lib/hooks/useEditorPageChange.hook"
@@ -26,6 +26,11 @@ export const CanvasToolbar = () => {
                 </Select>
                     : <div className="h-7 rounded-lg bg-white/70 w-[140px] animate-pulse duration-1000" />
                 }
+
+                {currentPage?.isPrivate && <div className="flex items-center gap-1.5 ml-2 h-6 px-2.5 bg-white/60 rounded-full">
+                    <LockKeyhole className="w-3.5 h-3.5 opacity-50" />
+                    <p className="text-xs pt-[1px] font-semibold- tracking-wide opacity-50 text-nowrap">Private page</p>
+                </div>}
             </div>
 
             <div className="flex items-center gap-1.5">
