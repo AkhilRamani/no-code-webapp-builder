@@ -2,6 +2,7 @@ import { UserAvatar } from "./avatar/UserAvatar";
 import { UserButton } from "./button/Button";
 import { UserCanvas } from "./Canvas";
 import { UserCard, UserCardTitle, UserCardDescription, UserCardContainer, UserCardHeader, UserCardFooter } from "./Card";
+import { UserBarChart } from "./chart/BarChart";
 import { UserContainer } from "./container/Container";
 import { UserHeader } from "./Header";
 import { UserSidebar } from "./Sidebar/Sidebar";
@@ -30,5 +31,6 @@ export const userComponents = {
   UserNumberCard,
   UserTableDynamic,
   AddEntryForm,
-  UserTextInput
+  UserTextInput,
+  UserBarChart
 };

@@ -17,6 +17,7 @@ import { Separator } from "../ui/separator";
 import { Layers } from "../layers/Layers";
 import { UserTableDynamic } from "../user/table/UserTableDynamic";
 import { UserTextInput } from "../user/TextInput/TextInput";
+import { UserBarChart } from "../user/chart/BarChart";
 
 type ConnectorRef = NodeSelectorWrapper | HTMLElement | null;
 
@@ -66,6 +67,7 @@ export const Toolbox: React.FC = () => {
               <Button ref={(ref) => connectors.create(ref, <UserNumberCard />)}>Number card</Button>
               <Button ref={(ref) => connectors.create(ref, <UserTableDynamic />)}>Table - Dynamic</Button>
               <Button ref={(ref) => connectors.create(ref, <UserTextInput />)}>Text Input</Button>
+              <Button ref={(ref) => connectors.create(ref, <UserBarChart />)}>Bar Chart</Button>
             </div>
 
           </TabsContent>
