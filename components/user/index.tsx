@@ -9,6 +9,7 @@ import { AddEntryForm } from "./table/formDialog/AddEntryForm";
 import { UserTable } from "./table/UserTable";
 import { UserTableDynamic } from "./table/UserTableDynamic";
 import { UserText } from "./Text/Text";
+import { UserTextInput } from "./TextInput/TextInput";
 import { UserNumberCard } from "./visulisation/userNumberCard/UserNumberCard";
 
 export const userComponents = {
@@ -28,5 +29,6 @@ export const userComponents = {
   UserAvatar,
   UserNumberCard,
   UserTableDynamic,
-  AddEntryForm
+  AddEntryForm,
+  UserTextInput
 };

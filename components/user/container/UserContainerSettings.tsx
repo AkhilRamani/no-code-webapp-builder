@@ -9,6 +9,7 @@ import { MoveHorizontal, MoveVertical } from "lucide-react";
 import { UserContainerBorderSetting } from "./settings/UserContainerBorderSetting";
 import { UserContainerShadowSetting } from "./settings/UserContainerShadowSetting";
 import { UserContainerAlignSetting } from "./settings/UserContainerAlignSetting";
+import { UserContainerSizeSetting } from "./settings/UserContainerSizeSetting";
 
 export type UserContainerSettingsProps = {
     classNames?: UserContainerClassNames;
@@ -18,8 +19,12 @@ export const UserContainerSettings = () => {
     const {
         actions: { setProp },
         classNames,
+        width,
+        height,
     } = useNode<UserContainerProps>((node) => ({
         classNames: node.data.props.classNames,
+        width: node.data.props.width,
+        height: node.data.props.height,
     }));
 
     const setClassName = (name: keyof UserContainerClassNames, value: string | undefined) => setProp((props: UserContainerProps) => (props.classNames = { ...props.classNames, [name]: value }), 500);
@@ -67,6 +72,13 @@ export const UserContainerSettings = () => {
                     onChange={value => setClassName('alignment', value)}
                 />
             }
+
+            <UserContainerSizeSetting
+                width={width}
+                height={height}
+                onWidthChange={value => setProp((props: UserContainerProps) => (props.width = value), 500)}
+                onHeightChange={value => setProp((props: UserContainerProps) => (props.height = value), 500)}
+            />
 
             <UserContainerSpacingSetting
                 spaceIn={classNames?.padding ?? 'p-0'}

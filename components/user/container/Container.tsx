@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { UserContainerSettings } from "./UserContainerSettings";
 import { UserContainerProps } from "./types";
 
-export const UserContainer = ({ background, children, classNames }: UserContainerProps) => {
+export const UserContainer = ({ background, children, classNames, width, height }: UserContainerProps) => {
   const {
     connectors: { connect, drag },
   } = useNode();
@@ -15,7 +15,7 @@ export const UserContainer = ({ background, children, classNames }: UserContaine
       className={clsx(!children && 'p-4 min-h-16 border', 'w-full', Object.values(classNames ?? {}))}
       // className={`p-4 w-full ${classNames?.direction}`}
       // className={`p-4 w-full`}
-      style={{ background }}
+      style={{ background, width, height }}
     >
       {children}
     </div>

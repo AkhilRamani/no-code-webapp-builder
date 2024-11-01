@@ -23,4 +23,6 @@ export type UserContainerProps = {
     padding?: number;
     children?: React.ReactNode;
     classNames?: UserContainerClassNames;
+    height?: number;
+    width?: number;
 };
