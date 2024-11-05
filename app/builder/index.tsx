@@ -3,7 +3,7 @@
 import { Toolbox } from "../../components/toolbox/Toolbox";
 import { SettingsPanel } from "../../components/SettingsPanel";
 import { Topbar } from "../../components/topbar/Topbar";
-import { Editor, useEditor } from "@craftjs/core";
+import { Editor } from "@craftjs/core";
 import { userComponents } from "@/components/user";
 import { RenderNode } from "@/components/RenderNode";
 import { EditorCanvas } from "@/components/EditorCanvas";

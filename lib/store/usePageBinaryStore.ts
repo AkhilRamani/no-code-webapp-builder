@@ -15,6 +15,8 @@ interface PageBinaryStore {
     saveUrl: string | undefined;
     saveFailed: boolean;
     saving: boolean;
+    editing: boolean;
+    toggleEditing: () => void;
     resetPageBinaryStore: () => void;
     saveSerializedNodes: (serializedNodes: string) => Promise<void>;
     handlePageChange: () => void;
@@ -32,7 +34,9 @@ export const usePageBinaryStore = create<PageBinaryStore>((set, get) => ({
     saveUrl: undefined,
     saveFailed: false,
     saving: false,
-    resetPageBinaryStore: () => set({ ingoreCount: 0, pageBinary: '', saveFailed: false, saving: false, saveUrl: undefined, fetchingBinary: true }),
+    editing: true,
+    toggleEditing: () => set(state => ({ editing: !state.editing })),
+    resetPageBinaryStore: () => set({ ingoreCount: 0, pageBinary: '', saveFailed: false, saving: false, saveUrl: undefined, fetchingBinary: true, editing: true }),
     handlePageChange: async () => {
         const { fetchSaveUrl } = get()
 
@@ -45,7 +49,8 @@ export const usePageBinaryStore = create<PageBinaryStore>((set, get) => ({
         }
     },
     handleBinaryChange: async (node) => {
-        const { ingoreCount, saveSerializedNodes } = get()
+        const { ingoreCount, saveSerializedNodes, editing } = get()
+        if (!editing) return
 
         if (ingoreCount < 3) {
             set({ ingoreCount: ingoreCount + 1 })

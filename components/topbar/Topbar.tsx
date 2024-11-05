@@ -16,12 +16,17 @@ export const Topbar: React.FC = () => {
     enabled: state.options.enabled,
   }));
 
-  const resetPageStore = usePageStore(store => store.resetPageStore);
-  const resetPageBinaryStore = usePageBinaryStore(store => store.resetPageBinaryStore);
+  const { resetPageStore } = usePageStore(({ resetPageStore }) => ({ resetPageStore }));
+  const { resetPageBinaryStore, toggleEditing } = usePageBinaryStore(({ resetPageBinaryStore, toggleEditing }) => ({ resetPageBinaryStore, toggleEditing }));
   const onBackClick = () => {
     resetPageStore();
     resetPageBinaryStore();
     router.push('/dashboard');
+  }
+
+  const handlePreview = () => {
+    toggleEditing();
+    actions.setOptions((options) => (options.enabled = !options.enabled));
   }
 
   return (
@@ -43,7 +48,7 @@ export const Topbar: React.FC = () => {
       </div>
 
       <div className="absolute top-4 flex w-full pointer-events-none">
-        <Button className="rounded-xl mx-auto pointer-events-auto" variant={enabled ? 'secondary' : 'default'} size='icon' onClick={() => actions.setOptions((options) => (options.enabled = !options.enabled))}>
+        <Button className="rounded-xl mx-auto pointer-events-auto" variant={enabled ? 'secondary' : 'default'} size='icon' onClick={handlePreview}>
           <Play className="h-5 w-5 fill-current" />
         </Button>
       </div>
