@@ -3,12 +3,12 @@ import { Button } from "../ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog"
 import { Loader2 } from "lucide-react";
 
-export const ConfirmDialog = ({ open, onOpenChange, title, description, onConfirm, confirmHandler }: { open: boolean, onOpenChange: (open: boolean) => void, title: string, description: string, onConfirm: () => void, confirmHandler: () => Promise<void> }) => {
+export const ConfirmDialog = ({ open, onOpenChange, title, description, async, onConfirm }: { open: boolean, onOpenChange: (open: boolean) => void, title: string, description: string, async?: boolean, onConfirm: () => Promise<void> }) => {
     const [loading, setLoading] = useState(false);
 
-    const handleConfirm = async () => {
+    const handleConfirmSync = async () => {
         setLoading(true);
-        await confirmHandler();
+        await onConfirm();
         setLoading(false);
     }
 
@@ -23,7 +23,7 @@ export const ConfirmDialog = ({ open, onOpenChange, title, description, onConfir
                     <DialogClose asChild>
                         <Button className="w-24 rounded-lg shadow font-semibold tracking-wide">Cancel</Button>
                     </DialogClose>
-                    <Button variant="destructive" className="w-24 rounded-lg shadow font-semibold tracking-wide" onClick={handleConfirm} disabled={loading}>
+                    <Button variant="destructive" className="w-24 rounded-lg shadow font-semibold tracking-wide" onClick={async ? onConfirm : handleConfirmSync} disabled={loading}>
                         {loading ? <Loader2 className="h-5 w-5 animate-spin stroke-[2.5]" /> : 'Delete'}
                     </Button>
                 </DialogFooter>

@@ -23,7 +23,7 @@ export const UserText = ({ text, classNames }: UserTextProps) => {
   }, [hasSelectedNode]);
 
   return (
-    <div ref={(ref) => connect(drag(ref))} onClick={(e) => setEditable(true)}>
+    <span ref={(ref) => connect(drag(ref))} onClick={(e) => setEditable(true)}>
       <ContentEditable
         disabled={!editable}
         html={text}
@@ -32,7 +32,7 @@ export const UserText = ({ text, classNames }: UserTextProps) => {
         className={clsx('outline-none', Object.values(classNames ?? {}))}
       />
       {/* <p style={{ fontSize }}>{text}</p> */}
-    </div>
+    </span>
   );
 };
 

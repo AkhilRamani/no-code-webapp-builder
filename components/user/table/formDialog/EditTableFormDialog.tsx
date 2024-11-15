@@ -2,41 +2,31 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { AddEntryForm } from "./AddEntryForm"
 import { useState } from "react";
 import { TableField } from "@/lib/store/useTableStore";
-import { useTableDataStore } from "@/lib/store/useTableDataStore";
-import { useEditor } from "@craftjs/core";
+import { TableDataRow } from "@/lib/store/useTableDataStore";
 
-interface TableFormDialogProps {
-	children: React.ReactNode;
+interface EditTableFormDialogProps {
+	data: TableDataRow | undefined;
+	onOpenChange: (open: boolean) => void;
 	title: string;
 	fields: TableField[];
-	projectId: string;
 	tableId: string;
+	onSubmit: (rowId: string, data: Record<string, unknown>) => Promise<void>;
 }
 
-export const TableFormDialog = ({ children, title, fields, projectId, tableId }: TableFormDialogProps) => {
-	const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-	const { editorEnabled } = useEditor((state) => ({
-		editorEnabled: state.options.enabled,
-	}));
-
-	const addNewRow = useTableDataStore(store => store.addNewRow);
+export const EditTableFormDialog = ({ data, onOpenChange, title, fields, tableId, onSubmit }: EditTableFormDialogProps) => {
 	const [isLoading, setIsLoading] = useState(false);
 
-	const onSubmit = async (data: any) => {
+	const _onSubmit = async (newData: any) => {
 		setIsLoading(true);
 
-		await addNewRow(projectId, tableId, data);
+		await onSubmit((data as TableDataRow)._id, newData);
 		setIsLoading(false);
 
-		setIsDialogOpen(false);
+		onOpenChange(false);
 	}
 
 	return (
-		<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-			<div onClick={() => !editorEnabled && setIsDialogOpen(true)}>
-				{children}
-			</div>
+		<Dialog open={!!data} onOpenChange={onOpenChange}>
 			<DialogContent className="!rounded-2xl p-0 overflow-hidden min-h-[50vh] max-h-[84vh] gap-0 flex flex-col">
 				<DialogHeader className="px-5 py-5 border-b shadow-sm flex flex-row items-center justify-between">
 					<DialogTitle>{title}</DialogTitle>
@@ -49,8 +39,9 @@ export const TableFormDialog = ({ children, title, fields, projectId, tableId }:
 					</DialogPrimitive.Close> */}
 				</DialogHeader>
 				<AddEntryForm
+					data={data}
 					fields={fields}
-					onSubmit={onSubmit}
+					onSubmit={_onSubmit}
 					isLoading={isLoading}
 				/>
 			</DialogContent>

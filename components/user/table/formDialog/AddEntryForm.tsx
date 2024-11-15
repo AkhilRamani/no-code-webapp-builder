@@ -10,7 +10,14 @@ import { Input } from "@/components/ui/input";
 import { DialogClose } from "@/components/ui/dialog";
 import { Loader, Loader2 } from "lucide-react";
 
-export const AddEntryForm = ({ fields, onSubmit, isLoading }: { fields: TableField[], onSubmit: (data: any) => void, isLoading: boolean }) => {
+interface AddEntryFormProps {
+	fields: TableField[],
+	onSubmit: (data: any) => void,
+	isLoading: boolean,
+	data?: Record<string, unknown>,
+}
+
+export const AddEntryForm = ({ fields, onSubmit, isLoading, data }: AddEntryFormProps) => {
 	const formSchema = z.object(
 		fields.reduce<Record<string, z.ZodTypeAny>>((acc, field) => {
 			let fieldSchema: z.ZodTypeAny;
@@ -46,7 +53,7 @@ export const AddEntryForm = ({ fields, onSubmit, isLoading }: { fields: TableFie
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: fields.reduce((acc, field) => {
-			acc[field.columnName] = field.type === TableFieldTypes.BOOL ? false : undefined;
+			acc[field.columnName] = data ? data[field.columnName] : (field.type === TableFieldTypes.BOOL ? false : undefined);
 			return acc;
 		}, {} as Record<string, any>),
 	});

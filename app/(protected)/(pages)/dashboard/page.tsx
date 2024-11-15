@@ -55,11 +55,7 @@ export default function Dashboard() {
                     onOpenChange={() => setDeleteProjectId(null)}
                     title="Are you sure?"
                     description="This action cannot be undone."
-                    onConfirm={() => {
-
-                        setDeleteProjectId(null)
-                    }}
-                    confirmHandler={async () => {
+                    onConfirm={async () => {
                         if (!deleteProjectId) return
                         await deleteProject(deleteProjectId)
                         setDeleteProjectId(null)
