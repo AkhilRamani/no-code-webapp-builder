@@ -9,6 +9,7 @@ import { ProjectRename } from "./ProjectRename";
 import { usePageStore } from "@/lib/store/usePageStore";
 import { PageSaveHandler } from "../pageSave/PageSaveHandler";
 import { usePageBinaryStore } from "@/lib/store/usePageBinaryStore";
+import { IntegrationsDialog } from "../integrations/IntegrationsDialog";
 
 export const Topbar: React.FC = () => {
   const router = useRouter();
@@ -44,6 +45,8 @@ export const Topbar: React.FC = () => {
 
         <div className="flex gap-4 items-center h-full">
           <PageSaveHandler />
+
+          <IntegrationsDialog />
         </div>
       </div>
 
